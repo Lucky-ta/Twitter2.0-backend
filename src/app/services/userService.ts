@@ -1,6 +1,12 @@
 const { User } = require('../../database/models');
 
-const postUser = async (body) => {
+type UserBodyRequest = {
+    name: string,
+    email: string,
+    password: string
+}
+
+const postUser = async (body: UserBodyRequest) => {
   const { email } = body;
   const findUserByEmail = await User.findOne({
     where: { email },
