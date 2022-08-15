@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const { User } = require('../../database/models');
 
 type UserBodyRequest = {
@@ -7,14 +8,19 @@ type UserBodyRequest = {
 }
 
 const postUser = async (body: UserBodyRequest) => {
-  const { email } = body;
+  const { email, name, password } = body;
   const findUserByEmail = await User.findOne({
     where: { email },
   });
 
   if (findUserByEmail) {
     return { status: 404, data: { message: 'E-mail já cadastrado' } };
-  } const newUser = await User.create(body);
+  }
+  const saltRounds = 10;
+  const hasPassword = await bcrypt.hash(password, saltRounds);
+  const newUser = await User.create({
+    name, email, password: hasPassword,
+  });
   return { status: 201, data: newUser };
 };
 
