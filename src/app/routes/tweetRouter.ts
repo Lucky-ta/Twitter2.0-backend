@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createTweet } from '../controllers/tweetController';
+import { createTweet, getTweets } from '../controllers/tweetController';
 import { tokenValidation, tweetValidation } from '../middlewares/tweetMiddlewares';
 
 const tweetRouter = Router();
@@ -11,5 +11,7 @@ tweetRouter.post(
 
   createTweet,
 );
+
+tweetRouter.get('/', getTweets);
 
 export default tweetRouter;

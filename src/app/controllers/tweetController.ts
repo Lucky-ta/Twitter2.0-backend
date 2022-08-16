@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { postTweet } from '../services/tweetServices';
+import { getAllTweets, postTweet } from '../services/tweetServices';
 
 const createTweet = async (req: Request, res: Response) => {
   try {
@@ -12,4 +12,13 @@ const createTweet = async (req: Request, res: Response) => {
   }
 };
 
-export { createTweet };
+const getTweets = async (req: Request, res: Response) => {
+  try {
+    const response = await getAllTweets();
+    return res.status(response.status).json(response.data);
+  } catch (e: any) {
+    return res.status(500).json(e.message);
+  }
+};
+
+export { createTweet, getTweets };
