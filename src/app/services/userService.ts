@@ -10,6 +10,29 @@ type UserBodyRequest = {
     password: string
 }
 
+type DataValuesShape = {
+  id: number,
+  name: string,
+  email: string,
+  password: string
+}
+
+const passwordValidation = async (password: string, dbDataValues: DataValuesShape)
+  : Promise<boolean> => {
+  const isValidPassword = await compare(password, dbDataValues.password);
+  return isValidPassword;
+};
+
+const signToken = (dbDataValues: DataValuesShape, secret: any) => {
+  const { password: passDb, ...userWithouPassword } = dbDataValues;
+
+  const token = jwt.sign(userWithouPassword, secret, {
+    expiresIn: '7d',
+    algorithm: 'HS256',
+  });
+  return token;
+};
+
 const postUser = async (body: UserBodyRequest) => {
   const { email, name, password } = body;
   const findUserByEmail = await User.findOne({
@@ -29,22 +52,16 @@ const postUser = async (body: UserBodyRequest) => {
 
 const loginUserAccount = async (userCredentials: UserBodyRequest) => {
   const { email, password } = userCredentials;
-  const isValidUser = await User.findOne({ where: { email } });
 
+  const isValidUser = await User.findOne({ where: { email } });
   if (isValidUser === null) {
     return { status: 404, data: { message: 'Invalid User' } };
   }
 
   const { dataValues } = isValidUser;
-  const passwordValidation = await compare(password, dataValues.password);
-  if (passwordValidation) {
-    const { password: passDb, ...userWithouPassword } = dataValues;
-
-    const token = jwt.sign(userWithouPassword, SECRET, {
-      expiresIn: '7d',
-      algorithm: 'HS256',
-    });
-
+  const isValidPassword = await passwordValidation(password, dataValues);
+  if (isValidPassword) {
+    const token = signToken(dataValues, SECRET);
     return { status: 200, data: token };
   }
   return { status: 404, data: { message: 'Invald password' } };
