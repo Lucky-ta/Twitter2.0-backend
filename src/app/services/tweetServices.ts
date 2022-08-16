@@ -28,4 +28,12 @@ const getAllTweets = async () => {
   } return { status: 404, data: { message: 'Erro ao pegar tweets' } };
 };
 
-export { postTweet, getAllTweets };
+const destroyTweet = async (tweetId: number) => {
+  const deleteTweet = await Tweet.destroy({ where: { id: tweetId } });
+
+  if (deleteTweet !== null) {
+    return { status: 200 };
+  } return { status: 404 };
+};
+
+export { postTweet, getAllTweets, destroyTweet };

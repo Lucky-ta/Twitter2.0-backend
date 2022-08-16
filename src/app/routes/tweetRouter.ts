@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createTweet, getTweets } from '../controllers/tweetController';
+import { createTweet, excludeTweet, getTweets } from '../controllers/tweetController';
 import { tokenValidation, tweetValidation } from '../middlewares/tweetMiddlewares';
 
 const tweetRouter = Router();
@@ -13,5 +13,7 @@ tweetRouter.post(
 );
 
 tweetRouter.get('/', getTweets);
+
+tweetRouter.delete('/:id', tokenValidation, excludeTweet);
 
 export default tweetRouter;

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getAllTweets, postTweet } from '../services/tweetServices';
+import { destroyTweet, getAllTweets, postTweet } from '../services/tweetServices';
 
 const createTweet = async (req: Request, res: Response) => {
   try {
@@ -21,4 +21,15 @@ const getTweets = async (req: Request, res: Response) => {
   }
 };
 
-export { createTweet, getTweets };
+const excludeTweet = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const parsedId = Number(id);
+    const response = await destroyTweet(parsedId);
+    return res.status(response.status).end();
+  } catch (e: any) {
+    return res.status(500).json(e.message);
+  }
+};
+
+export { createTweet, getTweets, excludeTweet };
