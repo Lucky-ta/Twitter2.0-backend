@@ -86,6 +86,7 @@ O projeto foi desenvolvido com as seguintes ferramentas:
 * [Heroku](https://dashboard.heroku.com/)
 * [Eslint](https://eslint.org/)
 * [MySQL](https://www.mysql.com/)
+* [JavaScript](https://www.javascript.com/)
 
 ## 📌 Versão
 
