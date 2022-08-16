@@ -2,3 +2,4 @@
 .env
 .eslintrc.json
 tsconfig.json
+secret.ts

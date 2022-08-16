@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { postUser } from '../services/userService';
+import { loginUserAccount, postUser } from '../services/userService';
 
 const createUser = async (req: Request, res: Response) => {
   try {
@@ -11,4 +11,14 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
-export { createUser };
+const loginUser = async (req: Request, res: Response) => {
+  try {
+    const { body } = req;
+    const result = await loginUserAccount(body);
+    return res.status(result.status).json(result.data);
+  } catch (e: any) {
+    return res.status(500).json(e.message);
+  }
+};
+
+export { createUser, loginUser };
