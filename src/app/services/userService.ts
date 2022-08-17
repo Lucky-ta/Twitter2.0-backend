@@ -47,7 +47,9 @@ const postUser = async (body: UserBodyRequest) => {
   const newUser = await User.create({
     name, email, password: hasPassword,
   });
-  return { status: 201, data: newUser };
+  const { password: passDb, ...userWithouPassword } = newUser;
+
+  return { status: 201, data: userWithouPassword };
 };
 
 const loginUserAccount = async (userCredentials: UserBodyRequest) => {

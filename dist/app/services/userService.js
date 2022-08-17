@@ -53,7 +53,8 @@ const postUser = (body) => __awaiter(void 0, void 0, void 0, function* () {
     const newUser = yield User.create({
         name, email, password: hasPassword,
     });
-    return { status: 201, data: newUser };
+    const { password: passDb } = newUser, userWithouPassword = __rest(newUser, ["password"]);
+    return { status: 201, data: userWithouPassword };
 });
 exports.postUser = postUser;
 const loginUserAccount = (userCredentials) => __awaiter(void 0, void 0, void 0, function* () {
