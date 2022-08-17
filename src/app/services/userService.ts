@@ -47,7 +47,7 @@ const postUser = async (body: UserBodyRequest) => {
   const newUser = await User.create({
     name, email, password: hasPassword,
   });
-  const { password: passDb, ...userWithouPassword } = newUser;
+  const { password: passDb, ...userWithouPassword } = newUser.dataValues;
 
   return { status: 201, data: userWithouPassword };
 };
