@@ -32,7 +32,7 @@ const tokenValidation = (req, res, next) => {
 exports.tokenValidation = tokenValidation;
 const tweetValidation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { tweet } = req.body;
-    if (!tweet || tweet === '')
+    if (!tweet || tweet.length === 0)
         return res.status(404).json(tweetErrorMessages_1.default.tweetError);
     return next();
 });

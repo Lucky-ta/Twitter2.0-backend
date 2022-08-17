@@ -18,7 +18,7 @@ const tokenValidation = (req: Request, res: Response, next: NextFunction) => {
 
 const tweetValidation = async (req: Request, res: Response, next: NextFunction) => {
   const { tweet } = req.body;
-  if (!tweet || tweet === '') return res.status(404).json(tweetErrors.tweetError);
+  if (!tweet || tweet.length === 0) return res.status(404).json(tweetErrors.tweetError);
   return next();
 };
 
