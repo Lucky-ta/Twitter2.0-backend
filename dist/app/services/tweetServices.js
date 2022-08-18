@@ -23,7 +23,7 @@ const getAllTweets = () => __awaiter(void 0, void 0, void 0, function* () {
     const allTweets = yield Tweet.findAll({
         attributes: ['tweet'],
         include: [
-            { model: User, required: true, attributes: ['name'] },
+            { model: User, required: true, attributes: ['name', 'id'] },
         ],
     });
     if (allTweets !== null) {

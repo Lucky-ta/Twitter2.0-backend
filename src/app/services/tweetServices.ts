@@ -19,7 +19,7 @@ const getAllTweets = async () => {
   const allTweets = await Tweet.findAll({
     attributes: ['tweet'],
     include: [
-      { model: User, required: true, attributes: ['name'] },
+      { model: User, required: true, attributes: ['name', 'id'] },
     ],
   });
 
