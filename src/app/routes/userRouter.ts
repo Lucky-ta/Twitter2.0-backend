@@ -23,7 +23,7 @@ userRouter.post(
 );
 
 userRouter.delete(
-  '/exclude',
+  '/exclude/:id',
   tokenValidation,
 
   deleteUser,
