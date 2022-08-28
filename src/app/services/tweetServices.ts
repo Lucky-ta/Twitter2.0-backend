@@ -17,7 +17,7 @@ const postTweet = async (userData: UserDataShape | undefined, tweet: string) => 
 
 const getAllTweets = async () => {
   const allTweets = await Tweet.findAll({
-    attributes: ['tweet'],
+    attributes: ['tweet', 'id'],
     include: [
       { model: User, required: true, attributes: ['name', 'id'] },
     ],
