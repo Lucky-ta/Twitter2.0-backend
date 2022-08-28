@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { createUser, loginUser } from '../controllers/userController';
+import { createUser, deleteUser, loginUser } from '../controllers/userController';
+import { tokenValidation } from '../middlewares/tweetMiddlewares';
 import { emailValidation, nameValidation, passwordValidation } from '../middlewares/userMiddlewares';
 
 const userRouter = Router();
@@ -19,6 +20,13 @@ userRouter.post(
   passwordValidation,
 
   loginUser,
+);
+
+userRouter.delete(
+  '/login',
+  tokenValidation,
+
+  deleteUser,
 );
 
 export default userRouter;

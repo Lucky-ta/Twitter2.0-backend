@@ -69,4 +69,12 @@ const loginUserAccount = async (userCredentials: UserBodyRequest) => {
   return { status: 404, data: { message: 'Invald password' } };
 };
 
-export { postUser, loginUserAccount };
+const excludeAccount = async (accountId: number) => {
+  const deleteTweet = await User.destroy({ where: { id: accountId } });
+
+  if (deleteTweet !== null) {
+    return { status: 200 };
+  } return { status: 404 };
+};
+
+export { postUser, loginUserAccount, excludeAccount };
