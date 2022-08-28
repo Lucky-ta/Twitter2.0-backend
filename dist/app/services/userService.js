@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginUserAccount = exports.postUser = void 0;
+exports.excludeAccount = exports.loginUserAccount = exports.postUser = void 0;
 const bcrypt_1 = require("bcrypt");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const secret_1 = __importDefault(require("../secret"));
@@ -72,3 +72,11 @@ const loginUserAccount = (userCredentials) => __awaiter(void 0, void 0, void 0, 
     return { status: 404, data: { message: 'Invald password' } };
 });
 exports.loginUserAccount = loginUserAccount;
+const excludeAccount = (accountId) => __awaiter(void 0, void 0, void 0, function* () {
+    const deleteTweet = yield User.destroy({ where: { id: accountId } });
+    if (deleteTweet !== null) {
+        return { status: 200 };
+    }
+    return { status: 404 };
+});
+exports.excludeAccount = excludeAccount;
