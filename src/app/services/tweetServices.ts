@@ -36,4 +36,14 @@ const destroyTweet = async (tweetId: number) => {
   } return { status: 404 };
 };
 
-export { postTweet, getAllTweets, destroyTweet };
+const getUserTweets = async (userId: number) => {
+  const userTweets = await Tweet.findAll({ where: { userId } });
+
+  if (userTweets !== null) {
+    return { status: 200, data: userTweets };
+  } return { status: 400, data: { message: 'User not found' } };
+};
+
+export {
+  postTweet, getAllTweets, destroyTweet, getUserTweets,
+};
