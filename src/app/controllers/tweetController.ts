@@ -5,6 +5,7 @@ import {
   postTweet,
   getUserTweets,
   editTweet,
+  updateTweetLike,
 } from '../services/tweetServices';
 
 const createTweet = async (req: Request, res: Response) => {
@@ -61,10 +62,24 @@ const editTweetById = async (req: Request, res: Response) => {
   }
 };
 
+const likeTweet = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const parsedId = Number(id);
+    const { likeSign } = req.body;
+
+    const result = await updateTweetLike(parsedId, likeSign);
+    return res.status(result.status).json(result.data);
+  } catch (e: any) {
+    return res.status(500).json(e.message);
+  }
+};
+
 export {
   createTweet,
   getTweets,
   excludeTweet,
   getTweetsByUserId,
   editTweetById,
+  likeTweet,
 };

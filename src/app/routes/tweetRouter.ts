@@ -5,6 +5,7 @@ import {
   excludeTweet,
   getTweets,
   getTweetsByUserId,
+  likeTweet,
 } from '../controllers/tweetController';
 import { tokenValidation, tweetValidation } from '../middlewares/tweetMiddlewares';
 
@@ -28,6 +29,7 @@ tweetRouter.put(
 
   editTweetById,
 );
+tweetRouter.put('/like/:id', likeTweet);
 
 tweetRouter.delete('/:id', tokenValidation, excludeTweet);
 

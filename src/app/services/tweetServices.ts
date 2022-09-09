@@ -55,10 +55,37 @@ const editTweet = async (tweetId: number, newTweet: string) => {
   } return { status: 400, data: { message: 'Tweet not found' } };
 };
 
+const updateTweetLike = async (tweetId: number, likeSign: string) => {
+  const currentTweet = await Tweet.findByPk(tweetId);
+
+  if (likeSign === '+') {
+    const sumTweetLikes = await Tweet.update(
+      { likes: currentTweet.dataValues.likes + 1 },
+      { where: { id: tweetId } },
+    );
+
+    if (sumTweetLikes !== null) {
+      return { status: 200, data: sumTweetLikes };
+    } return { status: 404, data: { message: 'Tweet not found' } };
+  }
+
+  if (likeSign === '-') {
+    const subtractTweetLikes = await Tweet.update(
+      { likes: currentTweet.dataValues.likes - 1 },
+      { where: { id: tweetId } },
+    );
+
+    if (subtractTweetLikes !== null) {
+      return { status: 200, data: subtractTweetLikes };
+    } return { status: 404, data: { message: 'Tweet not found' } };
+  } return { status: 404, data: { message: 'Action not available' } };
+};
+
 export {
   postTweet,
   getAllTweets,
   destroyTweet,
   getUserTweets,
   editTweet,
+  updateTweetLike,
 };
