@@ -29,7 +29,13 @@ tweetRouter.put(
 
   editTweetById,
 );
-tweetRouter.put('/like/:id', likeSignValidation, likeTweet);
+tweetRouter.put(
+  '/like/:id',
+  tokenValidation,
+  likeSignValidation,
+
+  likeTweet,
+);
 
 tweetRouter.delete('/:id', tokenValidation, excludeTweet);
 
