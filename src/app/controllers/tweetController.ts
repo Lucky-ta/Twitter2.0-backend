@@ -4,6 +4,7 @@ import {
   getAllTweets,
   postTweet,
   getUserTweets,
+  editTweet,
 } from '../services/tweetServices';
 
 const createTweet = async (req: Request, res: Response) => {
@@ -48,6 +49,22 @@ const getTweetsByUserId = async (req: Request, res: Response) => {
   }
 };
 
+const editTweetById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const parsedId = Number(id);
+    const { tweet } = req.body;
+    const result = await editTweet(parsedId, tweet);
+    return res.status(result.status).json(result.data);
+  } catch (e: any) {
+    return res.status(500).json(e.message);
+  }
+};
+
 export {
-  createTweet, getTweets, excludeTweet, getTweetsByUserId,
+  createTweet,
+  getTweets,
+  excludeTweet,
+  getTweetsByUserId,
+  editTweetById,
 };

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
   createTweet,
+  editTweetById,
   excludeTweet,
   getTweets,
   getTweetsByUserId,
@@ -19,6 +20,14 @@ tweetRouter.post(
 
 tweetRouter.get('/', getTweets);
 tweetRouter.get('/:id', tokenValidation, getTweetsByUserId);
+
+tweetRouter.put(
+  '/:id',
+  tokenValidation,
+  tweetValidation,
+
+  editTweetById,
+);
 
 tweetRouter.delete('/:id', tokenValidation, excludeTweet);
 

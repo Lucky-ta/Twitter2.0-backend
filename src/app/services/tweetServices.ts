@@ -44,6 +44,21 @@ const getUserTweets = async (userId: number) => {
   } return { status: 400, data: { message: 'User not found' } };
 };
 
+const editTweet = async (tweetId: number, newTweet: string) => {
+  const editedTweet = await Tweet.update(
+    { tweet: newTweet },
+    { where: { id: tweetId } },
+  );
+
+  if (editedTweet !== null) {
+    return { status: 200, data: editedTweet };
+  } return { status: 400, data: { message: 'Tweet not found' } };
+};
+
 export {
-  postTweet, getAllTweets, destroyTweet, getUserTweets,
+  postTweet,
+  getAllTweets,
+  destroyTweet,
+  getUserTweets,
+  editTweet,
 };
