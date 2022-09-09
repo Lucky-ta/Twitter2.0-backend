@@ -22,4 +22,13 @@ const tweetValidation = async (req: Request, res: Response, next: NextFunction) 
   return next();
 };
 
-export { tokenValidation, tweetValidation };
+const likeSignValidation = async (req: Request, res: Response, next: NextFunction) => {
+  const { likeSign } = req.body;
+  const availableSigns = ['+', '-'];
+  const isValidSign = availableSigns.includes(likeSign);
+
+  if (!likeSign || isValidSign === false) return res.status(404).json(tweetErrors.signError);
+  return next();
+};
+
+export { tokenValidation, tweetValidation, likeSignValidation };

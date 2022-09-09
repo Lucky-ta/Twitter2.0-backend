@@ -7,7 +7,7 @@ import {
   getTweetsByUserId,
   likeTweet,
 } from '../controllers/tweetController';
-import { tokenValidation, tweetValidation } from '../middlewares/tweetMiddlewares';
+import { likeSignValidation, tokenValidation, tweetValidation } from '../middlewares/tweetMiddlewares';
 
 const tweetRouter = Router();
 
@@ -29,7 +29,7 @@ tweetRouter.put(
 
   editTweetById,
 );
-tweetRouter.put('/like/:id', likeTweet);
+tweetRouter.put('/like/:id', likeSignValidation, likeTweet);
 
 tweetRouter.delete('/:id', tokenValidation, excludeTweet);
 
