@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
-import { excludeAccount, loginUserAccount, postUser } from '../services/userService';
+import {
+  editName, excludeAccount, loginUserAccount, postUser,
+} from '../services/userService';
 
 const createUser = async (req: Request, res: Response) => {
   try {
@@ -32,4 +34,19 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
-export { createUser, loginUser, deleteUser };
+const editUserName = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const parsedId = Number(id);
+    const { name } = req.body;
+
+    const result = await editName(parsedId, name);
+    return res.status(result.status).json(result.data);
+  } catch (e: any) {
+    return res.status(500).json(e.message);
+  }
+};
+
+export {
+  createUser, loginUser, deleteUser, editUserName,
+};

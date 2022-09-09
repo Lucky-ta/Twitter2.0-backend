@@ -77,4 +77,17 @@ const excludeAccount = async (accountId: number) => {
   } return { status: 404 };
 };
 
-export { postUser, loginUserAccount, excludeAccount };
+const editName = async (userId: number, newName: string) => {
+  const updateUserName = await User.update(
+    { name: newName },
+    { where: { id: userId } },
+  );
+
+  if (updateUserName !== null) {
+    return { status: 200, data: updateUserName };
+  } return { status: 404, data: { message: 'User not found' } };
+};
+
+export {
+  postUser, loginUserAccount, excludeAccount, editName,
+};

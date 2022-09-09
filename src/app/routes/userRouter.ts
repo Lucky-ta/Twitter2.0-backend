@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { createUser, deleteUser, loginUser } from '../controllers/userController';
+import {
+  createUser,
+  deleteUser,
+  editUserName,
+  loginUser,
+} from '../controllers/userController';
 import { tokenValidation } from '../middlewares/tweetMiddlewares';
 import { emailValidation, nameValidation, passwordValidation } from '../middlewares/userMiddlewares';
 
@@ -20,6 +25,14 @@ userRouter.post(
   passwordValidation,
 
   loginUser,
+);
+
+userRouter.put(
+  '/edit/:id',
+  nameValidation,
+  tokenValidation,
+
+  editUserName,
 );
 
 userRouter.delete(
