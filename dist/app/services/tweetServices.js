@@ -21,7 +21,7 @@ const postTweet = (userData, tweet) => __awaiter(void 0, void 0, void 0, functio
 exports.postTweet = postTweet;
 const getAllTweets = () => __awaiter(void 0, void 0, void 0, function* () {
     const allTweets = yield Tweet.findAll({
-        attributes: ['tweet', 'id'],
+        attributes: ['tweet', 'id', 'likes'],
         include: [
             { model: User, required: true, attributes: ['name', 'id'] },
         ],
