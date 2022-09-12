@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addLikedTweet, RemoveLikedTweet } from '../controllers/likedTweetsController';
+import { addLikedTweet, getLikedTweetsByUserId, RemoveLikedTweet } from '../controllers/likedTweetsController';
 import { tokenValidation } from '../middlewares/tweetMiddlewares';
 
 const likedTweetsRouter = Router();
@@ -9,6 +9,13 @@ likedTweetsRouter.post(
   tokenValidation,
 
   addLikedTweet,
+);
+
+likedTweetsRouter.get(
+  '/:userId',
+  tokenValidation,
+
+  getLikedTweetsByUserId,
 );
 
 likedTweetsRouter.delete(

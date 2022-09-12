@@ -16,4 +16,12 @@ const deslikeNewTweet = async (userId: number, tweetId: number) => {
   } return { status: 404 };
 };
 
-export { likeNewTweet, deslikeNewTweet };
+const listLikedTweets = async (userId: number) => {
+  const likedTweets = await LikedTweets.findAll({ where: { userId } });
+
+  if (likedTweets !== null) {
+    return { status: 201, data: likedTweets };
+  } return { status: 404, data: { message: 'User not found' } };
+};
+
+export { likeNewTweet, deslikeNewTweet, listLikedTweets };
