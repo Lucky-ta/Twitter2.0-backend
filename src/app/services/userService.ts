@@ -89,5 +89,8 @@ const editName = async (userId: number, newName: string) => {
 };
 
 export {
-  postUser, loginUserAccount, excludeAccount, editName,
+  postUser,
+  loginUserAccount,
+  excludeAccount,
+  editName,
 };
