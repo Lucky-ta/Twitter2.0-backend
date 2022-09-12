@@ -17,7 +17,7 @@ const deslikeNewTweet = async (userId: number, tweetId: number) => {
 };
 
 const listLikedTweets = async (userId: number) => {
-  const likedTweets = await LikedTweets.findOne({
+  const likedTweets = await LikedTweets.findAll({
     where: { userId },
     include: [
       { model: Tweet, required: true, attributes: ['tweet'] },

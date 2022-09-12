@@ -28,7 +28,7 @@ const deslikeNewTweet = (userId, tweetId) => __awaiter(void 0, void 0, void 0, f
 });
 exports.deslikeNewTweet = deslikeNewTweet;
 const listLikedTweets = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    const likedTweets = yield LikedTweets.findOne({
+    const likedTweets = yield LikedTweets.findAll({
         where: { userId },
         include: [
             { model: Tweet, required: true, attributes: ['tweet'] },
