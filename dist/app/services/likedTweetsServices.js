@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.listLikedTweets = exports.deslikeNewTweet = exports.likeNewTweet = void 0;
-const { LikedTweets } = require('../../database/models');
+const { LikedTweets, Tweet } = require('../../database/models');
 const likeNewTweet = (userId, tweetId) => __awaiter(void 0, void 0, void 0, function* () {
     const likeTweet = yield LikedTweets.create({ userId, tweetId });
     if (likeTweet !== null) {
@@ -28,10 +28,15 @@ const deslikeNewTweet = (userId, tweetId) => __awaiter(void 0, void 0, void 0, f
 });
 exports.deslikeNewTweet = deslikeNewTweet;
 const listLikedTweets = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    const likedTweets = yield LikedTweets.findAll({ where: { userId } });
+    const likedTweets = yield LikedTweets.findOne({
+        where: { userId },
+        include: [
+            { model: Tweet, required: true, attributes: ['tweet'] },
+        ],
+    });
     if (likedTweets !== null) {
         return { status: 201, data: likedTweets };
     }
-    return { status: 404, data: { message: 'User not found' } };
+    return { status: 404, data: { message: 'Tweet not found' } };
 });
 exports.listLikedTweets = listLikedTweets;

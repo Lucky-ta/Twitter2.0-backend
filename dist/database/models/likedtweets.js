@@ -1,5 +1,5 @@
 "use strict";
-const { Model, } = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class likedTweets extends Model {
         /**
@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            likedTweets.belongsTo(models.Tweet);
         }
     }
     likedTweets.init({
