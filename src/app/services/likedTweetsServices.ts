@@ -8,8 +8,12 @@ const likeNewTweet = async (userId: number, tweetId: number) => {
   } return { status: 404, data: { message: 'Create error' } };
 };
 
-const deslikeNewTweet = async () => {
+const deslikeNewTweet = async (userId: number, tweetId: number) => {
+  const likeTweet = await LikedTweets.destroy({ where: { userId, tweetId } });
 
+  if (likeTweet !== null) {
+    return { status: 200 };
+  } return { status: 404 };
 };
 
 export { likeNewTweet, deslikeNewTweet };
