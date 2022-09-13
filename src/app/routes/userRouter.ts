@@ -1,10 +1,5 @@
 import { Router } from 'express';
-import {
-  createUser,
-  deleteUser,
-  editUserName,
-  loginUser,
-} from '../controllers/userController';
+import UserController from '../controllers/userController';
 import { tokenValidation, userActionValidation } from '../middlewares/tokenMiddleware';
 import { emailValidation, nameValidation, passwordValidation } from '../middlewares/userMiddlewares';
 
@@ -16,7 +11,7 @@ userRouter.post(
   nameValidation,
   passwordValidation,
 
-  createUser,
+  UserController.createUser,
 );
 
 userRouter.post(
@@ -24,7 +19,7 @@ userRouter.post(
   emailValidation,
   passwordValidation,
 
-  loginUser,
+  UserController.loginUser,
 );
 
 userRouter.put(
@@ -33,7 +28,7 @@ userRouter.put(
   tokenValidation,
   userActionValidation,
 
-  editUserName,
+  UserController.editUserName,
 );
 
 userRouter.delete(
@@ -41,7 +36,7 @@ userRouter.delete(
   tokenValidation,
   userActionValidation,
 
-  deleteUser,
+  UserController.deleteUser,
 );
 
 export default userRouter;
