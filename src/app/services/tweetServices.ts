@@ -48,27 +48,6 @@ const editTweet = async (tweetId: number, newTweet: string) => {
   return validateResponse(editedTweet, tweetErrors.tweetError, 200);
 };
 
-const updateTweetLike = async (tweetId: number, likeSign: string) => {
-  const currentTweet = await Tweet.findByPk(tweetId);
-
-  if (likeSign === '+') {
-    const sumTweetLikes = await Tweet.update(
-      { likes: currentTweet.dataValues.likes + 1 },
-      { where: { id: tweetId } },
-    );
-
-    return validateResponse(sumTweetLikes, tweetErrors.tweetError, 200);
-  }
-
-  if (likeSign === '-') {
-    const subtractTweetLikes = await Tweet.update(
-      { likes: currentTweet.dataValues.likes - 1 },
-      { where: { id: tweetId } },
-    );
-    return validateResponse(subtractTweetLikes, tweetErrors.tweetError, 200);
-  } return { status: 404, data: { message: 'Action not available' } };
-};
-
 const tweetsByTweetId = async (tweetId: number) => {
   const tweetsByTheirId = await Tweet.findAll({
     where: { id: tweetId },
@@ -86,6 +65,5 @@ export {
   destroyTweet,
   getUserTweets,
   editTweet,
-  updateTweetLike,
   tweetsByTweetId,
 };
