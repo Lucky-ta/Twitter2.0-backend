@@ -4,10 +4,6 @@ import {
 } from '../services/userService';
 import { serviceShape } from './types/controllersTypes';
 
-const services = {
-  editName, excludeAccount, loginUserAccount, postUser,
-};
-
 class UserController {
   private service: serviceShape;
 
@@ -63,5 +59,9 @@ class UserController {
     }
   }
 }
+
+const services = {
+  editName, excludeAccount, loginUserAccount, postUser,
+};
 
 export default new UserController(services);
