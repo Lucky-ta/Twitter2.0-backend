@@ -4,41 +4,49 @@ import {
   editTweetById,
   excludeTweet,
   getTweets,
-  getTweetsByTweetId,
-  getTweetsByUserId,
+
   likeTweet,
 } from '../controllers/tweetController';
-import { likeSignValidation, tokenValidation, tweetValidation } from '../middlewares/tweetMiddlewares';
+import { tokenValidation, userActionValidation } from '../middlewares/tokenMiddleware';
+import { likeSignValidation, tweetValidation } from '../middlewares/tweetMiddlewares';
 
 const tweetRouter = Router();
 
 tweetRouter.post(
   '/create',
   tokenValidation,
+  userActionValidation,
   tweetValidation,
 
   createTweet,
 );
 
 tweetRouter.get('/', getTweets);
-tweetRouter.get('/:id', tokenValidation, getTweetsByUserId);
-tweetRouter.get('/get/:tweetId', tokenValidation, getTweetsByTweetId);
 
 tweetRouter.put(
   '/:id',
   tokenValidation,
+  userActionValidation,
   tweetValidation,
 
   editTweetById,
 );
+
 tweetRouter.put(
   '/like/:id',
   tokenValidation,
+  userActionValidation,
   likeSignValidation,
 
   likeTweet,
 );
 
-tweetRouter.delete('/:id', tokenValidation, excludeTweet);
+tweetRouter.delete(
+  '/:id',
+  tokenValidation,
+  userActionValidation,
+
+  excludeTweet,
+);
 
 export default tweetRouter;

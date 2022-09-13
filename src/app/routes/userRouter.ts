@@ -5,7 +5,7 @@ import {
   editUserName,
   loginUser,
 } from '../controllers/userController';
-import { tokenValidation } from '../middlewares/tweetMiddlewares';
+import { tokenValidation, userActionValidation } from '../middlewares/tokenMiddleware';
 import { emailValidation, nameValidation, passwordValidation } from '../middlewares/userMiddlewares';
 
 const userRouter = Router();
@@ -31,6 +31,7 @@ userRouter.put(
   '/edit/:id',
   nameValidation,
   tokenValidation,
+  userActionValidation,
 
   editUserName,
 );
@@ -38,6 +39,7 @@ userRouter.put(
 userRouter.delete(
   '/exclude/:id',
   tokenValidation,
+  userActionValidation,
 
   deleteUser,
 );
