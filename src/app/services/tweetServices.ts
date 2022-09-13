@@ -33,37 +33,15 @@ const destroyTweet = async (tweetId: number) => {
   return validateResponse(deleteTweet, tweetErrors.tweetError, 200);
 };
 
-const getUserTweets = async (userId: number) => {
+const getUserTweetsById = async (userId: number) => {
   const userTweets = await Tweet.findAll({ where: { userId } });
 
   return validateResponse(userTweets, tweetErrors.tweetError, 200);
-};
-
-const editTweet = async (tweetId: number, newTweet: string) => {
-  const editedTweet = await Tweet.update(
-    { tweet: newTweet },
-    { where: { id: tweetId } },
-  );
-
-  return validateResponse(editedTweet, tweetErrors.tweetError, 200);
-};
-
-const tweetsByTweetId = async (tweetId: number) => {
-  const tweetsByTheirId = await Tweet.findAll({
-    where: { id: tweetId },
-    include: [
-      { model: User, required: true, attributes: ['id', 'name'] },
-    ],
-  });
-
-  return validateResponse(tweetsByTheirId, tweetErrors.tweetError, 200);
 };
 
 export {
   postTweet,
   getAllTweets,
   destroyTweet,
-  getUserTweets,
-  editTweet,
-  tweetsByTweetId,
+  getUserTweetsById,
 };

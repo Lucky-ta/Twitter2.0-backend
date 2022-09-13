@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import {
   createTweet,
-  editTweetById,
   excludeTweet,
   getTweets,
+  getTweetsByUserId,
 
 } from '../controllers/tweetController';
 import { tokenValidation, userActionValidation } from '../middlewares/tokenMiddleware';
@@ -20,7 +20,18 @@ tweetRouter.post(
   createTweet,
 );
 
-tweetRouter.get('/', getTweets);
+tweetRouter.get(
+  '/',
+  tokenValidation,
+  userActionValidation,
+  getTweets,
+);
+tweetRouter.get(
+  '/',
+  tokenValidation,
+  userActionValidation,
+  getTweetsByUserId,
+);
 
 tweetRouter.put(
   '/:id',
@@ -28,7 +39,6 @@ tweetRouter.put(
   userActionValidation,
   tweetValidation,
 
-  editTweetById,
 );
 
 tweetRouter.delete(
