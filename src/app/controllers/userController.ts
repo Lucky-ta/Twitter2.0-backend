@@ -2,12 +2,12 @@ import { Request, Response } from 'express';
 import {
   editName, excludeAccount, loginUserAccount, postUser,
 } from '../services/userService';
-import { serviceShape } from './types/controllersTypes';
+import { serviceUserShape } from './types/controllersTypes';
 
 class UserController {
-  private service: serviceShape;
+  private service: serviceUserShape;
 
-  constructor(service: any) {
+  constructor(service: serviceUserShape) {
     this.createUser = this.createUser.bind(this);
     this.loginUser = this.loginUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);

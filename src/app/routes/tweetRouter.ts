@@ -1,11 +1,5 @@
 import { Router } from 'express';
-import {
-  createTweet,
-  excludeTweet,
-  getTweets,
-  getTweetsByUserId,
-
-} from '../controllers/tweetController';
+import TweetController from '../controllers/tweetController';
 import { tokenValidation, userActionValidation } from '../middlewares/tokenMiddleware';
 import { tweetValidation } from '../middlewares/tweetMiddlewares';
 
@@ -17,28 +11,20 @@ tweetRouter.post(
   userActionValidation,
   tweetValidation,
 
-  createTweet,
+  TweetController.createTweet,
 );
 
 tweetRouter.get(
   '/',
   tokenValidation,
   userActionValidation,
-  getTweets,
+  TweetController.getTweets,
 );
 tweetRouter.get(
-  '/',
+  '/:userId',
   tokenValidation,
   userActionValidation,
-  getTweetsByUserId,
-);
-
-tweetRouter.put(
-  '/:id',
-  tokenValidation,
-  userActionValidation,
-  tweetValidation,
-
+  TweetController.getTweetsByUserId,
 );
 
 tweetRouter.delete(
@@ -46,7 +32,7 @@ tweetRouter.delete(
   tokenValidation,
   userActionValidation,
 
-  excludeTweet,
+  TweetController.excludeTweet,
 );
 
 export default tweetRouter;

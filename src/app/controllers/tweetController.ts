@@ -5,52 +5,67 @@ import {
   postTweet,
   getUserTweetsById,
 } from '../services/tweetServices';
+import { serviceTweetShape } from './types/controllersTypes';
 
-const createTweet = async (req: Request, res: Response) => {
-  try {
-    const { tweet } = req.body;
-    const { userData } = req;
-    const result = await postTweet(userData, tweet);
-    return res.status(result.status).json(result.data);
-  } catch (e: any) {
-    return res.status(500).json(e.message);
+class TweetController {
+  private service: serviceTweetShape;
+
+  constructor(service: serviceTweetShape) {
+    this.createTweet = this.createTweet.bind(this);
+    this.getTweets = this.getTweets.bind(this);
+    this.excludeTweet = this.excludeTweet.bind(this);
+    this.getTweetsByUserId = this.getTweetsByUserId.bind(this);
+    this.service = service;
   }
-};
 
-const getTweets = async (req: Request, res: Response) => {
-  try {
-    const response = await getAllTweets();
-    return res.status(response.status).json(response.data);
-  } catch (e: any) {
-    return res.status(500).json(e.message);
+  async createTweet(req: Request, res: Response) {
+    try {
+      const { tweet } = req.body;
+      const { userData } = req;
+      const result = await this.service.postTweet(userData, tweet);
+      return res.status(result.status).json(result.data);
+    } catch (e: any) {
+      return res.status(500).json(e.message);
+    }
   }
-};
 
-const excludeTweet = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const parsedId = Number(id);
-    const response = await destroyTweet(parsedId);
-    return res.status(response.status).end();
-  } catch (e: any) {
-    return res.status(500).json(e.message);
+  async getTweets(req: Request, res: Response) {
+    try {
+      const response = await this.service.getAllTweets();
+      return res.status(response.status).json(response.data);
+    } catch (e: any) {
+      return res.status(500).json(e.message);
+    }
   }
-};
 
-const getTweetsByUserId = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const parsedId = Number(id);
-    const result = await getUserTweetsById(parsedId);
-    return res.status(result.status).json(result.data);
-  } catch (e: any) {
-    return res.status(500).json(e.message);
+  async excludeTweet(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const parsedId = Number(id);
+      const response = await this.service.destroyTweet(parsedId);
+      return res.status(response.status).end();
+    } catch (e: any) {
+      return res.status(500).json(e.message);
+    }
   }
+
+  async getTweetsByUserId(req: Request, res: Response) {
+    try {
+      const { userId } = req.params;
+      const parsedId = Number(userId);
+      const result = await this.service.getUserTweetsById(parsedId);
+      return res.status(result.status).json(result.data);
+    } catch (e: any) {
+      return res.status(500).json(e.message);
+    }
+  }
+}
+
+const service = {
+  destroyTweet,
+  getAllTweets,
+  postTweet,
+  getUserTweetsById,
 };
 
-export {
-  createTweet,
-  getTweets,
-  excludeTweet,
-  getTweetsByUserId,
-};
+export default new TweetController(service);
