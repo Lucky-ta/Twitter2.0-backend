@@ -81,6 +81,18 @@ const updateTweetLike = async (tweetId: number, likeSign: string) => {
   } return { status: 404, data: { message: 'Action not available' } };
 };
 
+const tweetsByTweetId = async (tweetId: number) => {
+  const tweetsByTheirId = await Tweet.findAll({
+    where: { id: tweetId },
+    include: [
+      { model: User, required: true, attributes: ['id', 'name'] },
+    ],
+  });
+  if (tweetsByTheirId !== null) {
+    return { status: 200, data: tweetsByTheirId };
+  } return { status: 404, data: { message: 'Tweet not found' } };
+};
+
 export {
   postTweet,
   getAllTweets,
@@ -88,4 +100,5 @@ export {
   getUserTweets,
   editTweet,
   updateTweetLike,
+  tweetsByTweetId,
 };

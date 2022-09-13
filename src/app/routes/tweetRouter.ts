@@ -4,6 +4,7 @@ import {
   editTweetById,
   excludeTweet,
   getTweets,
+  getTweetsByTweetId,
   getTweetsByUserId,
   likeTweet,
 } from '../controllers/tweetController';
@@ -21,6 +22,7 @@ tweetRouter.post(
 
 tweetRouter.get('/', getTweets);
 tweetRouter.get('/:id', tokenValidation, getTweetsByUserId);
+tweetRouter.get('/get/:tweetId', tokenValidation, getTweetsByTweetId);
 
 tweetRouter.put(
   '/:id',
