@@ -1,3 +1,6 @@
+import tweetErrors from './errorMessages/tweetMessages';
+import { validateResponse } from './userService';
+
 const { Tweet, User } = require('../../database/models');
 
 export type UserDataShape = {
@@ -10,9 +13,7 @@ export type UserDataShape = {
 
 const postTweet = async (userData: UserDataShape | undefined, tweet: string) => {
   const createTweet = await Tweet.create({ userId: userData?.id, tweet });
-  if (createTweet !== null) {
-    return { status: 201, data: createTweet };
-  } return { status: 404, data: { message: 'Erro ao criar tweet' } };
+  return validateResponse(createTweet, 'Not created', 200);
 };
 
 const getAllTweets = async () => {
@@ -23,25 +24,19 @@ const getAllTweets = async () => {
     ],
   });
 
-  if (allTweets !== null) {
-    return { status: 201, data: allTweets };
-  } return { status: 404, data: { message: 'Erro ao pegar tweets' } };
+  return validateResponse(allTweets, tweetErrors.tweetError, 200);
 };
 
 const destroyTweet = async (tweetId: number) => {
   const deleteTweet = await Tweet.destroy({ where: { id: tweetId } });
 
-  if (deleteTweet !== null) {
-    return { status: 200 };
-  } return { status: 404 };
+  return validateResponse(deleteTweet, tweetErrors.tweetError, 200);
 };
 
 const getUserTweets = async (userId: number) => {
   const userTweets = await Tweet.findAll({ where: { userId } });
 
-  if (userTweets !== null) {
-    return { status: 200, data: userTweets };
-  } return { status: 400, data: { message: 'User not found' } };
+  return validateResponse(userTweets, tweetErrors.tweetError, 200);
 };
 
 const editTweet = async (tweetId: number, newTweet: string) => {
@@ -50,9 +45,7 @@ const editTweet = async (tweetId: number, newTweet: string) => {
     { where: { id: tweetId } },
   );
 
-  if (editedTweet !== null) {
-    return { status: 200, data: editedTweet };
-  } return { status: 400, data: { message: 'Tweet not found' } };
+  return validateResponse(editedTweet, tweetErrors.tweetError, 200);
 };
 
 const updateTweetLike = async (tweetId: number, likeSign: string) => {
@@ -64,9 +57,7 @@ const updateTweetLike = async (tweetId: number, likeSign: string) => {
       { where: { id: tweetId } },
     );
 
-    if (sumTweetLikes !== null) {
-      return { status: 200, data: sumTweetLikes };
-    } return { status: 404, data: { message: 'Tweet not found' } };
+    return validateResponse(sumTweetLikes, tweetErrors.tweetError, 200);
   }
 
   if (likeSign === '-') {
@@ -74,10 +65,7 @@ const updateTweetLike = async (tweetId: number, likeSign: string) => {
       { likes: currentTweet.dataValues.likes - 1 },
       { where: { id: tweetId } },
     );
-
-    if (subtractTweetLikes !== null) {
-      return { status: 200, data: subtractTweetLikes };
-    } return { status: 404, data: { message: 'Tweet not found' } };
+    return validateResponse(subtractTweetLikes, tweetErrors.tweetError, 200);
   } return { status: 404, data: { message: 'Action not available' } };
 };
 
@@ -88,9 +76,8 @@ const tweetsByTweetId = async (tweetId: number) => {
       { model: User, required: true, attributes: ['id', 'name'] },
     ],
   });
-  if (tweetsByTheirId !== null) {
-    return { status: 200, data: tweetsByTheirId };
-  } return { status: 404, data: { message: 'Tweet not found' } };
+
+  return validateResponse(tweetsByTheirId, tweetErrors.tweetError, 200);
 };
 
 export {

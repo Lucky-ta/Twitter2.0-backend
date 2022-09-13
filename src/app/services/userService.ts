@@ -1,11 +1,12 @@
 import SECRET from '../secret';
 import { hashPassword, passwordValidation } from './accountSecurity/bycrypt/bycryptFunctions';
 import signToken from './accountSecurity/token/JwtFunctions';
+import userErrors from './errorMessages/userMessages';
 import { UserBodyRequest } from './types/servicesTypes';
 
 const { User } = require('../../database/models');
 
-const validateResponse = (response: any, errorMessage: string, statusCode: number) => {
+export const validateResponse = (response: any, errorMessage: string, statusCode: number) => {
   if (response !== null) {
     return { status: statusCode, data: response };
   } return { status: 404, data: { message: errorMessage } };
@@ -26,7 +27,7 @@ const postUser = async (body: UserBodyRequest) => {
   const isUserRegistered = await isUserInDb(email);
 
   if (isUserRegistered) {
-    return { status: 404, data: { message: 'E-mail já cadastrado' } };
+    return { status: 404, data: { message: userErrors.emailError } };
   }
 
   const hasPassword = await hashPassword(password);
@@ -36,7 +37,7 @@ const postUser = async (body: UserBodyRequest) => {
 
   const { password: passDb, ...userWithouPassword } = newUser.dataValues;
 
-  return validateResponse(userWithouPassword, 'Not created', 201);
+  return validateResponse(userWithouPassword, userErrors.userError, 201);
 };
 
 const loginUserAccount = async (userCredentials: UserBodyRequest) => {
@@ -44,7 +45,7 @@ const loginUserAccount = async (userCredentials: UserBodyRequest) => {
 
   const existUser = await User.findOne({ where: { email } });
   if (existUser === null) {
-    return { status: 404, data: { message: 'Invalid User' } };
+    return { status: 404, data: { message: userErrors.userError } };
   }
 
   const { dataValues } = existUser;
@@ -53,13 +54,13 @@ const loginUserAccount = async (userCredentials: UserBodyRequest) => {
     const token = signToken(dataValues, SECRET);
     return { status: 200, data: token };
   }
-  return { status: 404, data: { message: 'Invalid password' } };
+  return { status: 404, data: { message: userErrors.passwordError } };
 };
 
 const excludeAccount = async (accountId: number) => {
   const deleteTweet = await User.destroy({ where: { id: accountId } });
 
-  return validateResponse(deleteTweet, 'Delete error', 200);
+  return validateResponse(deleteTweet, userErrors.userError, 200);
 };
 
 const editName = async (userId: number, newName: string) => {
@@ -68,7 +69,7 @@ const editName = async (userId: number, newName: string) => {
     { where: { id: userId } },
   );
 
-  return validateResponse(updateUserName, 'User not found', 200);
+  return validateResponse(updateUserName, userErrors.userError, 200);
 };
 
 export {
