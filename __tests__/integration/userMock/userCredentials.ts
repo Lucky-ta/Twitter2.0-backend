@@ -14,6 +14,10 @@ const userCredentials = {
     email: 'lucmaieski@gmail.com',
     password: '',
   },
+  credentialsInvalidPass: {
+    email: 'lucmaieski@gmail.com',
+    password: '123456',
+  },
 
   credentialsWithoutemail: {
     name: 'Lucas',
@@ -22,6 +26,10 @@ const userCredentials = {
   },
   credentialsEmptyemail: {
     name: 'Lucas',
+    password: '123456789',
+  },
+  credentialsInvalidEmail: {
+    email: 'anotherEmail@gmail.com',
     password: '123456789',
   },
 
