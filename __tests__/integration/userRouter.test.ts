@@ -221,4 +221,49 @@ describe('Test user router', () => {
       expect(result.body).toStrictEqual(validateErrors.actionError);
     });
   });
+
+  describe('DELETE: /exclude/:id', () => {
+    beforeAll(async () => {
+      await clearDatabase(User);
+      await request(app)
+        .post('/user/create')
+        .set('Accept', 'application/json')
+        .send(userCredentials.validCredentials);
+
+      const res = await request(app)
+        .post('/user/login')
+        .set('Accept', 'application/json')
+        .send(userCredentials.validCredentials);
+      userToken = res.body;
+    });
+
+    it('should return status code 200 with valid token', async () => {
+      const result = await request(app)
+        .delete('/user/exclude/7')
+        .set('Accept', 'application/json')
+        .set('Authorization', userToken);
+
+      expect(result.statusCode).toBe(200);
+    });
+
+    it('should return status code 404 with invalid token', async () => {
+      const invalidToken: string = '1234';
+
+      const result = await request(app)
+        .delete('/user/exclude/7')
+        .set('Accept', 'application/json')
+        .set('Authorization', invalidToken);
+
+      expect(result.statusCode).toBe(401);
+    });
+
+    it('should return status code 404 with invalid user ID', async () => {
+      const result = await request(app)
+        .delete('/user/exclude/5')
+        .set('Accept', 'application/json')
+        .set('Authorization', userToken);
+
+      expect(result.statusCode).toBe(404);
+    });
+  });
 });
