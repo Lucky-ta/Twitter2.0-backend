@@ -1,8 +1,6 @@
-const clearDatabase = async (dataBase: any) => {
-  await dataBase.destroy({
-    where: {},
-    truncate: true,
-  });
-};
+const { sequelize } = require('../../src/database/models');
 
-export default clearDatabase;
+module.exports = () => Promise.all(
+  Object.keys(sequelize.models)
+    .map((key) => sequelize.models[key].destroy({ truncate: true, force: true })),
+);

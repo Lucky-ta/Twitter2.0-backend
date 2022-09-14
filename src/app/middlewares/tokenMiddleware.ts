@@ -18,8 +18,8 @@ const tokenValidation = (req: Request, res: Response, next: NextFunction) => {
 
 const userActionValidation = (req: Request, res: Response, next: NextFunction) => {
   const userId: number = req.userData.id;
-  const { id } = req.params;
-  const parsedId: number = Number(id);
+  const { id, userToken } = req.params;
+  const parsedId: number = Number(id || userToken);
 
   if (userId !== parsedId) {
     return res.status(404).json(validateErrors.actionError);

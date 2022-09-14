@@ -6,7 +6,7 @@ import { tweetValidation } from '../middlewares/tweetMiddlewares';
 const tweetRouter = Router();
 
 tweetRouter.post(
-  '/create',
+  '/create/:userId',
   tokenValidation,
   userActionValidation,
   tweetValidation,
