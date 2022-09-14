@@ -2,11 +2,14 @@
 import request from 'supertest';
 import app from '../../src/app';
 import userErrorsMiddlweares from '../../src/app/middlewares/errorMessages/userErrorMessages';
+import validateErrors from '../../src/app/middlewares/errorMessages/validateError';
 import userErrors from '../../src/app/services/errorMessages/userMessages';
 import clearDatabase from '../utils/truncateDb';
 import userCredentials from './userMock/userCredentials';
 
 const { User } = require('../../src/database/models');
+
+let userToken: any;
 
 describe('Test user router', () => {
   describe('POST: /user/create', () => {
@@ -119,6 +122,9 @@ describe('Test user router', () => {
         .set('Accept', 'application/json')
         .send(userCredentials.validCredentials);
     });
+    beforeAll(async () => {
+      await clearDatabase(User);
+    });
 
     it('should return status code 200 with valid credentials', async () => {
       const result = await request(app)
@@ -167,6 +173,52 @@ describe('Test user router', () => {
         .send(userCredentials.credentialsInvalidEmail);
 
       expect(result.body).toStrictEqual(expectedResponse);
+    });
+  });
+
+  describe('PUT: /edit/:id', () => {
+    beforeEach(async () => {
+      await clearDatabase(User);
+      await request(app)
+        .post('/user/create')
+        .set('Accept', 'application/json')
+        .send(userCredentials.validCredentials);
+
+      const res = await request(app)
+        .post('/user/login')
+        .set('Accept', 'application/json')
+        .send(userCredentials.validCredentials);
+      userToken = res.body;
+    });
+
+    it('should return status code 200 with a valid new user name', async () => {
+      const result = await request(app)
+        .put('/user/edit/4')
+        .set('Accept', 'application/json')
+        .set('Authorization', userToken)
+        .send({ name: 'Billy' });
+
+      expect(result.statusCode).toBe(200);
+    });
+
+    it('should return status code 404 with a invalid new user name', async () => {
+      const result = await request(app)
+        .put('/user/edit/4')
+        .set('Accept', 'application/json')
+        .set('authorization', userToken)
+        .send({ name: 'Lu' });
+
+      expect(result.statusCode).toBe(404);
+    });
+
+    it('should return invalid action error with a invalid user id', async () => {
+      const result = await request(app)
+        .put('/user/edit/2')
+        .set('Accept', 'application/json')
+        .set('authorization', userToken)
+        .send({ name: 'Billy' });
+
+      expect(result.body).toStrictEqual(validateErrors.actionError);
     });
   });
 });
