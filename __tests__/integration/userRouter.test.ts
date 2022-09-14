@@ -1,54 +1,20 @@
 /* eslint-disable no-undef */
-import request from 'supertest';
-import app from '../../src/app';
+
 import userErrorsMiddlweares from '../../src/app/middlewares/errorMessages/userErrorMessages';
 import validateErrors from '../../src/app/middlewares/errorMessages/validateError';
 import userErrors from '../../src/app/services/errorMessages/userMessages';
+import {
+  createUser,
+  deleteUser,
+  editUserName,
+  signInUser,
+} from '../utils/supertestsFunctions';
 import userCredentials from './mock/userCredentials';
 
 const truncate = require('../utils/truncateDb');
 
 let userToken: string;
 let registeredUserId: number;
-
-type TestUserCredentialsShape = {
-  name?: string;
-  email?: string;
-  password?: string;
-}
-
-const createUser = async (user: TestUserCredentialsShape) => {
-  const response = await request(app)
-    .post('/user/create')
-    .set('Accept', 'application/json')
-    .send(user);
-  return response;
-};
-
-const signInUser = async (user: TestUserCredentialsShape) => {
-  const result = await request(app)
-    .post('/user/login')
-    .set('Accept', 'application/json')
-    .send(user);
-  return result;
-};
-
-const editUserName = async (userId: string, newName: string, accessToken: string) => {
-  const result = await request(app)
-    .put(`/user/edit/${userId}`)
-    .set('Accept', 'application/json')
-    .set('Authorization', accessToken)
-    .send({ name: newName });
-  return result;
-};
-
-const deleteUser = async (userId: string, accessToken: string) => {
-  const result = await request(app)
-    .delete(`/user/exclude/${userId}`)
-    .set('Accept', 'application/json')
-    .set('Authorization', accessToken);
-  return result;
-};
 
 describe('Test user router', () => {
   beforeAll(async () => {
