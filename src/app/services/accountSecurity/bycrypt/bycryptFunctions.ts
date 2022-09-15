@@ -1,9 +1,9 @@
 import { compare, hash } from 'bcrypt';
 import { DataValuesShape } from '../../types/servicesTypes';
 
-const passwordValidation = async (password: string, dbDataValues: DataValuesShape)
+const passwordValidation = async (hashPassword: string, dbDataValues: DataValuesShape)
   : Promise<boolean> => {
-  const isValidPassword = await compare(password, dbDataValues.password);
+  const isValidPassword = await compare(hashPassword, dbDataValues.password);
   return isValidPassword;
 };
 
