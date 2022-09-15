@@ -35,7 +35,6 @@ const destroyTweet = async (tweetId: number) => {
 
 const getUserTweetsById = async (userId: number) => {
   const userTweets = await Tweet.findAll({ where: { userId } });
-
   return validateResponse(userTweets, tweetErrors.tweetError, 200);
 };
 
