@@ -39,3 +39,12 @@ export const deleteUser = async (userId: string, accessToken: string) => {
     .set('Authorization', accessToken);
   return result;
 };
+
+export const createTweet = async (tweet: string, userId: string, accessToken: string) => {
+  const result = await request(app)
+    .post(`/tweet/create/${userId}`)
+    .set('Accept', 'application/json')
+    .set('Authorization', accessToken)
+    .send({ tweet });
+  return result;
+};

@@ -17,11 +17,12 @@ const tokenValidation = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const userActionValidation = (req: Request, res: Response, next: NextFunction) => {
-  const userId: number = req.userData.id;
-  const { id, userToken } = req.params;
-  const parsedId: number = Number(id || userToken);
+  const userParamsId: number = req.userData.id;
 
-  if (userId !== parsedId) {
+  const { id, userId } = req.params;
+  const parsedId: number = Number(id || userId);
+
+  if (userParamsId !== parsedId) {
     return res.status(404).json(validateErrors.actionError);
   }
   return next();

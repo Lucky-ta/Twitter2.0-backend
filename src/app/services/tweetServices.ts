@@ -13,7 +13,7 @@ export type UserDataShape = {
 
 const postTweet = async (userData: UserDataShape | undefined, tweet: string) => {
   const createTweet = await Tweet.create({ userId: userData?.id, tweet });
-  return validateResponse(createTweet, 'Not created', 200);
+  return validateResponse(createTweet, 'Not created', 201);
 };
 
 const getAllTweets = async () => {
