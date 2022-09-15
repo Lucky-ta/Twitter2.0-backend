@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import TweetController from '../controllers/tweetController';
 import { tokenValidation, userActionValidation } from '../middlewares/tokenMiddleware';
-import { tweetValidation } from '../middlewares/tweetMiddlewares';
+import tweetValidation from '../middlewares/tweetMiddlewares';
 
 const tweetRouter = Router();
 
