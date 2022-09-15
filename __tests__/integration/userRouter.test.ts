@@ -122,7 +122,7 @@ describe('Test user router', () => {
     });
   });
 
-  describe('PUT: /edit/:id', () => {
+  describe('PUT: /user/edit/:id', () => {
     beforeEach(async () => {
       await truncate();
       const createResult = await createUser(userCredentials.validCredentials);
@@ -157,7 +157,7 @@ describe('Test user router', () => {
     });
   });
 
-  describe('DELETE: /exclude/:id', () => {
+  describe('DELETE: /user/exclude/:id', () => {
     beforeEach(async () => {
       await truncate();
       const createResponse = await createUser(userCredentials.validCredentials);
