@@ -64,3 +64,11 @@ export const getTweetsByUserId = async (userId: string, accessToken: string) => 
     .set('Authorization', accessToken);
   return result;
 };
+
+export const deleteTweetById = async (tweetId: string, userId: string, accessToken: string) => {
+  const result = await request(app)
+    .delete(`/tweet/${tweetId}/${userId}`)
+    .set('Accept', 'application/json')
+    .set('Authorization', accessToken);
+  return result;
+};

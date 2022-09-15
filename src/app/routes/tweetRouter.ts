@@ -27,7 +27,7 @@ tweetRouter.get(
 );
 
 tweetRouter.delete(
-  '/:id',
+  '/:tweetId/:userId',
   tokenValidation,
   userActionValidation,
 

@@ -42,6 +42,8 @@ const userCredentials = {
     name: 'Lucas',
     password: '123456789',
   },
+  invalidUserToken: '1213',
+  invalidUserId: '1000',
 };
 
 export default userCredentials;

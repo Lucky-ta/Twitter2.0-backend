@@ -40,8 +40,8 @@ class TweetController {
 
   async excludeTweet(req: Request, res: Response) {
     try {
-      const { id } = req.params;
-      const parsedId = Number(id);
+      const { tweetId } = req.params;
+      const parsedId = Number(tweetId);
       const response = await this.service.destroyTweet(parsedId);
       return res.status(response.status).end();
     } catch (e: any) {
