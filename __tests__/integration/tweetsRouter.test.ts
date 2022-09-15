@@ -41,9 +41,11 @@ describe('Test tweet router', () => {
     });
 
     it('should return status code 404 with invalid token', async () => {
-      const invalidToken = '1234';
-
-      const result = await createTweet(tweetMock.validTweet, registeredUserId, invalidToken);
+      const result = await createTweet(
+        tweetMock.validTweet,
+        registeredUserId,
+        userCredentials.invalidUserToken,
+      );
       expect(result.statusCode).toStrictEqual(401);
     });
 
@@ -93,16 +95,13 @@ describe('Test tweet router', () => {
       expect(result.body).toHaveLength(0);
     });
     it('should return status code 401 with invalid token', async () => {
-      const invalidToken = '1234';
-
-      const result = await getAllTweets(invalidToken);
+      const result = await getAllTweets(userCredentials.invalidUserToken);
       expect(result.statusCode).toBe(401);
     });
     it('should return malformed token error message with invalid token', async () => {
       const expectedResult = { message: 'jwt malformed' };
-      const invalidToken = '1234';
 
-      const result = await getAllTweets(invalidToken);
+      const result = await getAllTweets(userCredentials.invalidUserToken);
       expect(result.body).toStrictEqual(expectedResult);
     });
   });
@@ -139,21 +138,15 @@ describe('Test tweet router', () => {
       expect(result.body).toStrictEqual(expectedResult);
     });
     it('should return status code 401 with invalid token', async () => {
-      const invalidToken = '1234';
-
-      const result = await getTweetsByUserId(registeredUserId, invalidToken);
+      const result = await getTweetsByUserId(registeredUserId, userCredentials.invalidUserToken);
       expect(result.statusCode).toBe(401);
     });
     it('should return status code 404 with invalid user ID', async () => {
-      const invalidUserId = '20';
-
-      const result = await getTweetsByUserId(invalidUserId, userToken);
+      const result = await getTweetsByUserId(userCredentials.invalidUserId, userToken);
       expect(result.statusCode).toBe(404);
     });
     it('should return invalid action error message with invalid user ID', async () => {
-      const invalidUserId = '20';
-
-      const result = await getTweetsByUserId(invalidUserId, userToken);
+      const result = await getTweetsByUserId(userCredentials.invalidUserId, userToken);
       expect(result.body).toBe(validateErrors.actionError);
     });
   });
@@ -184,21 +177,19 @@ describe('Test tweet router', () => {
     });
 
     it('should return status code 401 with invalid token', async () => {
-      const invalidToken = '12343';
-
-      const result = await deleteTweetById(tweetId, registeredUserId, invalidToken);
+      const result = await deleteTweetById(
+        tweetId,
+        registeredUserId,
+        userCredentials.invalidUserToken,
+      );
       expect(result.statusCode).toBe(401);
     });
     it('should return status code 404 with invalid user ID', async () => {
-      const invalidUserID = '20';
-
-      const result = await deleteTweetById(tweetId, invalidUserID, userToken);
+      const result = await deleteTweetById(tweetId, userCredentials.invalidUserId, userToken);
       expect(result.statusCode).toBe(404);
     });
     it('should return invalid action error message with invalid user ID', async () => {
-      const invalidUserID = '20';
-
-      const result = await deleteTweetById(tweetId, invalidUserID, userToken);
+      const result = await deleteTweetById(tweetId, userCredentials.invalidUserId, userToken);
       expect(result.body).toBe(validateErrors.actionError);
     });
   });

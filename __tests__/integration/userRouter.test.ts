@@ -175,9 +175,8 @@ describe('Test user router', () => {
 
     it('should return status code 404 with invalid token', async () => {
       const parsedId = String(registeredUserId);
-      const invalidToken: string = '1234';
 
-      const result = await deleteUser(parsedId, invalidToken);
+      const result = await deleteUser(parsedId, userCredentials.invalidUserToken);
       expect(result.statusCode).toBe(401);
     });
 
