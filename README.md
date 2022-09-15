@@ -33,7 +33,6 @@ Siga as instruções abaixo para a execução do projeto.
 
 Para você executar o projeto em ambiente de desenvolvimento, você precisa configurar as seguintes variáveis de ambiente para se conectar ao seu banco de dados:
 
-
 Crie um arquivo com o seguinte nome ".env", e dentro dele configure as seguintes variáveis:
 ```
 DB_USERNAME=seu db userName aqui...(root)
@@ -75,34 +74,5 @@ Para acessa-lo basta colando o seguinte link na URL do seu navegador:
 http://localhost:3000/
 ```
 Certifique-se de que não há nenhuma mais nenhuma aplicação rodando na porta 3000 para rodar o projeto!
-## 🛠️ Construído com
-
-O projeto foi desenvolvido com as seguintes ferramentas:
-
-* [TypeScript](https://www.typescriptlang.org/)
-* [NodeJs](https://nodejs.org/en/)
-* [Sequelize](https://sequelize.org/)
-* [Docker](https://www.docker.com/)
-* [Heroku](https://dashboard.heroku.com/)
-* [Eslint](https://eslint.org/)
-* [MySQL](https://www.mysql.com/)
-* [JavaScript](https://www.javascript.com/)
-
-## 📌 Versão
-
-[Git](https://git-scm.com/) - para controle de versão.
-
-## 🚀 Deploy
-O deploy do projeto foi realizado utililizando:
-* [Heroku](https://dashboard.heroku.com/)
-
-## 📌 Rotas
-
-* USER ROUTES: [create new user](https://twitter-clone-bac-kend.herokuapp.com/user/create);
-* USER ROUTES: [user login](https://twitter-clone-bac-kend.herokuapp.com/user/login);
-
-* TWEET ROUTES: [create new tweet](https://twitter-clone-bac-kend.herokuapp.com/tweet/create)
-* TWEET ROUTES: [get all tweets](https://twitter-clone-bac-kend.herokuapp.com/tweet)
-* TWEET ROUTES: [delete tweet](https://twitter-clone-bac-kend.herokuapp.com/tweet/:id)
 
 ---
