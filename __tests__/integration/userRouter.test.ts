@@ -8,7 +8,7 @@ import {
   editUserName,
   signInUser,
 } from '../utils/supertestsFunctions';
-import userCredentials from './mock/userCredentials';
+import userCredentials from '../mock/userCredentials';
 
 const truncate = require('../utils/truncateDb');
 

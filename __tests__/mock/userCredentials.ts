@@ -1,5 +1,6 @@
 const userCredentials = {
   validCredentials: {
+    id: 1,
     name: 'Lucas',
     email: 'lucmaieski@gmail.com',
     password: '123456789',
