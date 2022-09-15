@@ -17,7 +17,6 @@ tweetRouter.post(
 tweetRouter.get(
   '/',
   tokenValidation,
-  userActionValidation,
   TweetController.getTweets,
 );
 tweetRouter.get(

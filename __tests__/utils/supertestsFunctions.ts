@@ -48,3 +48,11 @@ export const createTweet = async (tweet: string, userId: string, accessToken: st
     .send({ tweet });
   return result;
 };
+
+export const getAllTweets = async (accessToken: string) => {
+  const result = await request(app)
+    .get('/tweet/')
+    .set('Accept', 'application/json')
+    .set('Authorization', accessToken);
+  return result;
+};
