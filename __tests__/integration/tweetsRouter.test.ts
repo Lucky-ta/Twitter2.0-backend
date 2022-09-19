@@ -11,7 +11,6 @@ const truncate = require('../utils/truncateDb');
 let userToken: string;
 let registeredUserId: string;
 let tweetId: string;
-let tweetUserId: number;
 
 describe('Test tweet router', () => {
   describe('POST: /tweet/create/:userId', () => {
@@ -116,7 +115,6 @@ describe('Test tweet router', () => {
       const tweetResult = await createTweet(tweetMock.validTweet, registeredUserId, userToken);
 
       tweetId = tweetResult.body.id;
-      tweetUserId = tweetResult.body.userId;
     });
 
     it('should return status code 200 with valid token and user ID', async () => {
@@ -127,10 +125,13 @@ describe('Test tweet router', () => {
       const result = await getTweetsByUserId(registeredUserId, userToken);
 
       const expectedTweetResponse = {
+        User: {
+          id: registeredUserId,
+          name: userCredentials.validCredentials.name,
+        },
         id: tweetId,
         likes: 0,
         tweet: tweetMock.validTweet,
-        userId: tweetUserId,
       };
 
       const expectedResult = [expectedTweetResponse];
@@ -161,7 +162,6 @@ describe('Test tweet router', () => {
       const tweetResult = await createTweet(tweetMock.validTweet, registeredUserId, userToken);
 
       tweetId = tweetResult.body.id;
-      tweetUserId = tweetResult.body.userId;
     });
 
     it('should return status code 200 with valid token and user ID', async () => {
