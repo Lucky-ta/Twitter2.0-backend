@@ -45,19 +45,65 @@ const getUserTweetsById = async (userId: number) => {
   return validateResponse(userTweets, tweetErrors.tweetError, 200);
 };
 
+const sumTweetLike = async (tweetId: number) => {
+  const tweet = await Tweet.findOne({ where: { id: tweetId } });
+  const { likes: currentLikes } = tweet.dataValues;
+
+  const sumTweet = await Tweet.update(
+    { likes: currentLikes + 1 },
+    { where: { id: tweetId } },
+  );
+  return validateResponse(sumTweet, tweetErrors.tweetError, 200);
+};
+
+const subtractTweetLike = async (tweetId: number) => {
+  const tweet = await Tweet.findOne({ where: { id: tweetId } });
+  const { likes: currentLikes } = tweet.dataValues;
+
+  const subtractTweet = await Tweet.update(
+    { likes: currentLikes - 1 },
+    { where: { id: tweetId } },
+  );
+  return validateResponse(subtractTweet, tweetErrors.tweetError, 200);
+};
+
 const likeNewTweet = async (userId: number, tweetId: number) => {
   const isTweetLiked = await LikedTweets.findOne({ where: { userId } });
 
   if (isTweetLiked !== null) {
     const unlikeTweet = await LikedTweets.destroy({ where: { userId } });
+    await subtractTweetLike(tweetId);
     if (unlikeTweet !== null) {
       return { status: 201, data: { action: 'Unliked' } };
     } return { status: 404, data: userErrors.userError };
   }
 
   const likeTweet = await LikedTweets.create({ userId, tweetId });
+  await sumTweetLike(tweetId);
   if (likeTweet !== null) {
     return { status: 201, data: { action: 'Liked' } };
+  } return { status: 404, data: tweetErrors.tweetError };
+};
+
+const filterLikedTweets = async (userId: number) => {
+  const likedTweets: any = [];
+  const user = await User.findOne({ where: { id: userId }, attributes: ['id', 'name'] });
+  const likedTweetsIds = await LikedTweets.findAll({ where: { userId }, attributes: ['tweetId'] });
+
+  if (likedTweetsIds !== null) {
+    await Promise.all(likedTweetsIds.map(async ({ dataValues }: any) => {
+      const tweetById = await Tweet.findOne({
+        where: { id: dataValues.tweetId },
+        attributes: ['tweet', 'id', 'likes'],
+      });
+      likedTweets.push(tweetById.dataValues);
+    }));
+
+    const result = {
+      User: user,
+      Tweets: likedTweets,
+    };
+    return { status: 200, data: result };
   } return { status: 404, data: tweetErrors.tweetError };
 };
 
@@ -67,4 +113,5 @@ export {
   destroyTweet,
   getUserTweetsById,
   likeNewTweet,
+  filterLikedTweets,
 };

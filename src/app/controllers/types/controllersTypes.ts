@@ -25,4 +25,5 @@ export interface serviceTweetShape {
     destroyTweet: (parsedId: number) => Promise<serviceFunctionsResponseShape>;
     getUserTweetsById: (userId: number) => Promise<serviceFunctionsResponseShape>;
     likeNewTweet: (userId: number, tweetId: number) => Promise<serviceFunctionsResponseShape>
+    filterLikedTweets: (userId: number) => Promise<serviceFunctionsResponseShape>
 }

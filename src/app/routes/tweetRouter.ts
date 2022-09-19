@@ -42,4 +42,12 @@ tweetRouter.post(
   TweetController.likeTweet,
 );
 
+tweetRouter.get(
+  '/liked/:userId',
+  tokenValidation,
+  userActionValidation,
+
+  TweetController.getLikedTweets,
+);
+
 export default tweetRouter;

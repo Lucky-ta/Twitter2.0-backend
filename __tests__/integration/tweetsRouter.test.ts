@@ -252,14 +252,13 @@ describe('Test tweet router', () => {
 
       const tweetResult = await createTweet(tweetMock.validTweet, registeredUserId, userToken);
       tweetId = tweetResult.body.id;
-
-      await likeTweet(registeredUserId, tweetId, userToken);
     });
     it('should return status code 200 with valid user ID', async () => {
       const result = await getLikedTweets(registeredUserId, userToken);
       expect(result.statusCode).toBe(200);
     });
     it('should return an array of liked tweets with valid user ID', async () => {
+      await likeTweet(registeredUserId, tweetId, userToken);
       const result = await getLikedTweets(registeredUserId, userToken);
 
       const expectedResult = {
