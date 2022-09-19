@@ -1,5 +1,5 @@
 import {
-  createTweet, createUser, deleteTweetById, getAllTweets, getTweetsByUserId, signInUser,
+  createTweet, createUser, deleteTweetById, getAllTweets, getTweetsByUserId, likeTweet, signInUser,
 } from '../utils/supertestsFunctions';
 import userCredentials from '../mock/userCredentials';
 import tweetMock from '../mock/tweetMock';
@@ -191,6 +191,38 @@ describe('Test tweet router', () => {
     it('should return invalid action error message with invalid user ID', async () => {
       const result = await deleteTweetById(tweetId, userCredentials.invalidUserId, userToken);
       expect(result.body).toBe(validateErrors.actionError);
+    });
+  });
+
+  describe('POST: /tweet/like/:userId', () => {
+    beforeEach(async () => {
+      await truncate();
+      const createResponse = await createUser(userCredentials.validCredentials);
+      const loginResponse = await signInUser(userCredentials.validCredentials);
+      userToken = loginResponse.body;
+      registeredUserId = createResponse.body.id;
+
+      const tweetResult = await createTweet(tweetMock.validTweet, registeredUserId, userToken);
+      tweetId = tweetResult.body.id;
+    });
+
+    it('should return status code 200 with valid user ID and token', async () => {
+      const response = await likeTweet(registeredUserId, tweetId, userToken);
+      expect(response.statusCode).toBe(200);
+    });
+
+    it('should return a action description `Liked` on body with valid user ID and token', async () => {
+      const response = await likeTweet(registeredUserId, tweetId, userToken);
+      const expectedResponse = { action: 'Liked' };
+
+      expect(response.body).toStrictEqual(expectedResponse);
+    });
+
+    it('should return a action description `Unlike` on body if user already liked the tweet', async () => {
+      const response = await likeTweet(registeredUserId, tweetId, userToken);
+      const expectedResponse = { action: 'Unlike' };
+
+      expect(response.body).toStrictEqual(expectedResponse);
     });
   });
 });

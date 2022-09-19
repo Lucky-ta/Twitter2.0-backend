@@ -72,3 +72,11 @@ export const deleteTweetById = async (tweetId: string, userId: string, accessTok
     .set('Authorization', accessToken);
   return result;
 };
+
+export const likeTweet = async (userId: string, tweetId: string, accessToken: string) => {
+  const result = await request(app)
+    .post(`/tweet/like/${userId}/${tweetId}`)
+    .set('Accept', 'application/json')
+    .set('Authorization', accessToken);
+  return result;
+};
