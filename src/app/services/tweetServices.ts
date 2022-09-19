@@ -1,7 +1,8 @@
 import tweetErrors from './errorMessages/tweetMessages';
+import userErrors from './errorMessages/userMessages';
 import { validateResponse } from './userService';
 
-const { Tweet, User } = require('../../database/models');
+const { Tweet, User, LikedTweets } = require('../../database/models');
 
 export type UserDataShape = {
   id: number,
@@ -44,9 +45,26 @@ const getUserTweetsById = async (userId: number) => {
   return validateResponse(userTweets, tweetErrors.tweetError, 200);
 };
 
+const likeNewTweet = async (userId: number, tweetId: number) => {
+  const isTweetLiked = await LikedTweets.findOne({ where: { userId } });
+
+  if (isTweetLiked !== null) {
+    const unlikeTweet = await LikedTweets.destroy({ where: { userId } });
+    if (unlikeTweet !== null) {
+      return { status: 200, data: { action: 'Unliked' } };
+    } return { status: 404, data: userErrors.userError };
+  }
+
+  const likeTweet = await LikedTweets.create({ userId, tweetId });
+  if (likeTweet !== null) {
+    return { status: 200, data: { action: 'Liked' } };
+  } return { status: 404, data: tweetErrors.tweetError };
+};
+
 export {
   postTweet,
   getAllTweets,
   destroyTweet,
   getUserTweetsById,
+  likeNewTweet,
 };

@@ -4,6 +4,7 @@ import {
   getAllTweets,
   postTweet,
   getUserTweetsById,
+  likeNewTweet,
 } from '../services/tweetServices';
 import { serviceTweetShape } from './types/controllersTypes';
 
@@ -15,6 +16,7 @@ class TweetController {
     this.getTweets = this.getTweets.bind(this);
     this.excludeTweet = this.excludeTweet.bind(this);
     this.getTweetsByUserId = this.getTweetsByUserId.bind(this);
+    this.likeTweet = this.likeTweet.bind(this);
     this.service = service;
   }
 
@@ -59,6 +61,18 @@ class TweetController {
       return res.status(500).json(e.message);
     }
   }
+
+  async likeTweet(req: Request, res: Response) {
+    try {
+      const { userId, tweetId } = req.params;
+      const parsedUserId = Number(userId);
+      const parsedTweetId = Number(tweetId);
+      const result = await this.service.likeNewTweet(parsedUserId, parsedTweetId);
+      return res.status(result.status).json(result.data);
+    } catch (e: any) {
+      return res.status(500).json(e.message);
+    }
+  }
 }
 
 const service = {
@@ -66,6 +80,7 @@ const service = {
   getAllTweets,
   postTweet,
   getUserTweetsById,
+  likeNewTweet,
 };
 
 export default new TweetController(service);

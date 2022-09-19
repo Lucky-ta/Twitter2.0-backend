@@ -194,7 +194,7 @@ describe('Test tweet router', () => {
     });
   });
 
-  describe('POST: /tweet/like/:userId', () => {
+  describe('POST: /tweet/like/:userId/:tweetId', () => {
     beforeEach(async () => {
       await truncate();
       const createResponse = await createUser(userCredentials.validCredentials);
@@ -213,16 +213,27 @@ describe('Test tweet router', () => {
 
     it('should return a action description `Liked` on body with valid user ID and token', async () => {
       const response = await likeTweet(registeredUserId, tweetId, userToken);
-      const expectedResponse = { action: 'Liked' };
 
+      const expectedResponse = { action: 'Liked' };
       expect(response.body).toStrictEqual(expectedResponse);
     });
 
     it('should return a action description `Unlike` on body if user already liked the tweet', async () => {
+      await likeTweet(registeredUserId, tweetId, userToken);
       const response = await likeTweet(registeredUserId, tweetId, userToken);
-      const expectedResponse = { action: 'Unlike' };
 
+      const expectedResponse = { action: 'Unliked' };
       expect(response.body).toStrictEqual(expectedResponse);
+    });
+
+    it('should return status code 401 with invalid token', async () => {
+      const response = await likeTweet(registeredUserId, tweetId, userCredentials.invalidUserToken);
+      expect(response.statusCode).toBe(401);
+    });
+
+    it('should return status code 404 with invalid user ID', async () => {
+      const response = await likeTweet(userCredentials.invalidUserId, tweetId, userToken);
+      expect(response.statusCode).toBe(404);
     });
   });
 });

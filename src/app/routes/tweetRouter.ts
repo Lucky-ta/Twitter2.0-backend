@@ -34,4 +34,12 @@ tweetRouter.delete(
   TweetController.excludeTweet,
 );
 
+tweetRouter.post(
+  '/like/:userId/:tweetId',
+  tokenValidation,
+  userActionValidation,
+
+  TweetController.likeTweet,
+);
+
 export default tweetRouter;
