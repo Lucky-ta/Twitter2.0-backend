@@ -87,6 +87,7 @@ const likeNewTweet = async (userId: number, tweetId: number) => {
 
 const filterLikedTweets = async (userId: number) => {
   const likedTweets: any = [];
+
   const user = await User.findOne({ where: { id: userId }, attributes: ['id', 'name'] });
   const likedTweetsIds = await LikedTweets.findAll({ where: { userId }, attributes: ['tweetId'] });
 
