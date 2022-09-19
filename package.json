@@ -8,7 +8,7 @@
     "test": "NODE_ENV=test jest -i --forceExit --verbose",
     "posttest": "NODE_ENV=test sequelize db:migrate:undo:all",
     "dev": "ts-node-dev --transpile-only --respawn src/server.ts",
-    "start": "node ./dist/server.js",
+    "start": "node ./dist/src/server.js",
     "db:reset": "NODE_ENV=test sequelize db:migrate:undo:all"
   },
   "keywords": [],
