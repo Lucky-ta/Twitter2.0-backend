@@ -28,6 +28,25 @@ Siga as instruções abaixo para a execução do projeto.
    ```
    yarn install
   ```
+  
+## ⚙️ Executando os testes
+
+
+### 🔩 Testes Unitários e de Integração
+
+O projeto possui testes unitários e de integração, que roda em um banco de dados sqlite!
+Os testes vão verificar a integridade do aplicativo testando desde pequenas funções, até as rotas desenvolvidas.
+
+Dentro da pasta raiz do projeto, rode o seguinte comando:
+```
+npm run test
+```
+Ele irá rodar todos os testes automaticamente.
+
+Caso precise zerar o banco de dados sqlite, rode o seguinte comando:
+```
+npm run db:reset
+```
 
 ## ⚙️ Variáveis de ambiente
 
@@ -42,11 +61,11 @@ DB_HOST=o host do seu db aqui...
 ```
 ## 📦 JWT SECRET
 
- O projeto foi desenvolvido pensando na segurança do usuário, então foi criado uma chave SECRET para validar o usuário na qual não estou disponibilizando 
- aqui neste ambiente público.
+ O projeto foi desenvolvido pensando na segurança do usuário, então foi criado uma chave SECRET para validar o usuário, na qual não estou disponibilizando 
+ aqui neste repositório público.
  
  Para você rodar o projeto sem erros, você precisa criar um arquivo com nome "secret.ts" dentro da pasta "app" que fica dentro de "src", e então
- criar uma constante SECRET com alguma palavra chave que você prefira e exporta-la como default.
+ criar uma constante SECRET com alguma palavra chave que você prefira e exporta-la como padrão.
 
 ## 📦 Desenvolvimento
 
@@ -75,4 +94,22 @@ http://localhost:3000/
 ```
 Certifique-se de que não há nenhuma mais nenhuma aplicação rodando na porta 3000 para rodar o projeto!
 
+## ⚙️ Rotas
+
+--Rotas de usuário--
+- http://localhost:3000/user/create (POST METHOD) - Parâmetros [email, name, password] - (REGISTRO DE USUÁRIO);
+- http://localhost:3000/user/login (POST METHOD) - Parâmetros [email, password] - (LOGIN DE USUÁRIO);
+- http://localhost:3000/user/edit/:id (PUT METHOD) - Parâmetros [name] - (EDITAR NOME DO USUÁRIO);
+- http://localhost:3000/user/exclude/:id (DELETE METHOD) - Parâmetros [] - (EXCLUIR USUÁRIO);
 ---
+
+--Rotas de tweet--
+- http://localhost:3000/tweet/ (GET METHOD) - Parâmetros [] - (RETORNA TODOS TWEETS NO BANCO DE DADOS);
+- http://localhost:3000/tweet/:userId (GET METHOD) - Parâmetros [] - (RETORNA TODOS OS TWEETS DE UM USUÁRIO);
+- http://localhost:3000/tweet/liked/:userId (GET METHOD) - Parâmetros [] - (RETORNA TODOS OS TWEETS QUE O USUÁRIO CURTIU);
+- http://localhost:3000/tweet/create/:userId (POST METHOD) - Parâmetros [tweet] - (CRIAR NOVO TWEET);
+- http://localhost:3000/tweet/like/:userId/:tweetId (POST METHOD) - Parâmetros [] - (CURTE UM TWEET EPECÍFICO);
+- http://localhost:3000/tweet/:tweetId/:userId (DELETE METHOD) - Parâmetros [] - (EXCLUI O TWEET DE UM USUÁRIO ESPECÍFICO);
+
+---
+
