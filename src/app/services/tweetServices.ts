@@ -51,13 +51,13 @@ const likeNewTweet = async (userId: number, tweetId: number) => {
   if (isTweetLiked !== null) {
     const unlikeTweet = await LikedTweets.destroy({ where: { userId } });
     if (unlikeTweet !== null) {
-      return { status: 200, data: { action: 'Unliked' } };
+      return { status: 201, data: { action: 'Unliked' } };
     } return { status: 404, data: userErrors.userError };
   }
 
   const likeTweet = await LikedTweets.create({ userId, tweetId });
   if (likeTweet !== null) {
-    return { status: 200, data: { action: 'Liked' } };
+    return { status: 201, data: { action: 'Liked' } };
   } return { status: 404, data: tweetErrors.tweetError };
 };
 

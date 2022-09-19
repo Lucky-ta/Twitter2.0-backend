@@ -1,5 +1,12 @@
 import {
-  createTweet, createUser, deleteTweetById, getAllTweets, getTweetsByUserId, likeTweet, signInUser,
+  createTweet,
+  createUser,
+  deleteTweetById,
+  getAllTweets,
+  getLikedTweets,
+  getTweetsByUserId,
+  likeTweet,
+  signInUser,
 } from '../utils/supertestsFunctions';
 import userCredentials from '../mock/userCredentials';
 import tweetMock from '../mock/tweetMock';
@@ -193,7 +200,6 @@ describe('Test tweet router', () => {
       expect(result.body).toBe(validateErrors.actionError);
     });
   });
-
   describe('POST: /tweet/like/:userId/:tweetId', () => {
     beforeEach(async () => {
       await truncate();
@@ -206,9 +212,9 @@ describe('Test tweet router', () => {
       tweetId = tweetResult.body.id;
     });
 
-    it('should return status code 200 with valid user ID and token', async () => {
+    it('should return status code 201 with valid user ID and token', async () => {
       const response = await likeTweet(registeredUserId, tweetId, userToken);
-      expect(response.statusCode).toBe(200);
+      expect(response.statusCode).toBe(201);
     });
 
     it('should return a action description `Liked` on body with valid user ID and token', async () => {
@@ -234,6 +240,61 @@ describe('Test tweet router', () => {
     it('should return status code 404 with invalid user ID', async () => {
       const response = await likeTweet(userCredentials.invalidUserId, tweetId, userToken);
       expect(response.statusCode).toBe(404);
+    });
+  });
+  describe('GET: /tweet/liked/:userId', () => {
+    beforeEach(async () => {
+      await truncate();
+      const createResponse = await createUser(userCredentials.validCredentials);
+      const loginResponse = await signInUser(userCredentials.validCredentials);
+      userToken = loginResponse.body;
+      registeredUserId = createResponse.body.id;
+
+      const tweetResult = await createTweet(tweetMock.validTweet, registeredUserId, userToken);
+      tweetId = tweetResult.body.id;
+
+      await likeTweet(registeredUserId, tweetId, userToken);
+    });
+    it('should return status code 200 with valid user ID', async () => {
+      const result = await getLikedTweets(registeredUserId, userToken);
+      expect(result.statusCode).toBe(200);
+    });
+    it('should return an array of liked tweets with valid user ID', async () => {
+      const result = await getLikedTweets(registeredUserId, userToken);
+
+      const expectedResult = {
+        User: {
+          id: registeredUserId,
+          name: userCredentials.validCredentials.name,
+        },
+        Tweets: [{
+          id: tweetId,
+          likes: 1,
+          tweet: tweetMock.validTweet,
+        },
+        ],
+      };
+      expect(result.body).toStrictEqual(expectedResult);
+    });
+    it('should return an empty array if there is no liked tweets', async () => {
+      const result = await getLikedTweets(registeredUserId, userToken);
+
+      const expectedResult = {
+        User: {
+          id: registeredUserId,
+          name: userCredentials.validCredentials.name,
+        },
+        Tweets: [],
+      };
+      expect(result.body).toStrictEqual(expectedResult);
+    });
+    it('should return status code 401 with invalid token', async () => {
+      const result = await getLikedTweets(registeredUserId, userCredentials.invalidUserToken);
+      expect(result.statusCode).toBe(401);
+    });
+    it('should return status code 404 with invalid user ID', async () => {
+      const result = await getLikedTweets(userCredentials.invalidUserId, userToken);
+      expect(result.statusCode).toBe(404);
     });
   });
 });

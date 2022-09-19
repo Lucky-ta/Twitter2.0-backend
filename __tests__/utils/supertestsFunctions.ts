@@ -80,3 +80,11 @@ export const likeTweet = async (userId: string, tweetId: string, accessToken: st
     .set('Authorization', accessToken);
   return result;
 };
+
+export const getLikedTweets = async (userId: string, accessToken: string) => {
+  const result = await request(app)
+    .get(`/tweet/liked/${userId}`)
+    .set('Accept', 'application/json')
+    .set('Authorization', accessToken);
+  return result;
+};
