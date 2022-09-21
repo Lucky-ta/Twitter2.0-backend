@@ -88,7 +88,6 @@ const likeNewTweet = async (userId: number, tweetId: number) => {
 const filterLikedTweets = async (userId: number) => {
   const likedTweets: any = [];
 
-  const user = await User.findOne({ where: { id: userId }, attributes: ['id', 'name'] });
   const likedTweetsIds = await LikedTweets.findAll({ where: { userId }, attributes: ['tweetId'] });
 
   if (likedTweetsIds !== null) {
@@ -96,15 +95,14 @@ const filterLikedTweets = async (userId: number) => {
       const tweetById = await Tweet.findOne({
         where: { id: dataValues.tweetId },
         attributes: ['tweet', 'id', 'likes'],
+        include: [
+          { model: User, required: true, attributes: ['name', 'id'] },
+        ],
       });
       likedTweets.push(tweetById.dataValues);
     }));
 
-    const result = {
-      User: user,
-      Tweets: likedTweets,
-    };
-    return { status: 200, data: result };
+    return { status: 200, data: likedTweets };
   } return { status: 404, data: tweetErrors.tweetError };
 };
 

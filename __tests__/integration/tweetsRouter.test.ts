@@ -261,31 +261,23 @@ describe('Test tweet router', () => {
       await likeTweet(registeredUserId, tweetId, userToken);
       const result = await getLikedTweets(registeredUserId, userToken);
 
-      const expectedResult = {
+      const expectedTweetResponse = {
         User: {
           id: registeredUserId,
           name: userCredentials.validCredentials.name,
         },
-        Tweets: [{
-          id: tweetId,
-          likes: 1,
-          tweet: tweetMock.validTweet,
-        },
-        ],
+        id: tweetId,
+        likes: 1,
+        tweet: tweetMock.validTweet,
       };
+
+      const expectedResult = [expectedTweetResponse];
       expect(result.body).toStrictEqual(expectedResult);
     });
     it('should return an empty array if there is no liked tweets', async () => {
       const result = await getLikedTweets(registeredUserId, userToken);
 
-      const expectedResult = {
-        User: {
-          id: registeredUserId,
-          name: userCredentials.validCredentials.name,
-        },
-        Tweets: [],
-      };
-      expect(result.body).toStrictEqual(expectedResult);
+      expect(result.body).toStrictEqual([]);
     });
     it('should return status code 401 with invalid token', async () => {
       const result = await getLikedTweets(registeredUserId, userCredentials.invalidUserToken);
