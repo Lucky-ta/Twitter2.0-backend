@@ -68,10 +68,10 @@ const subtractTweetLike = async (tweetId: number) => {
 };
 
 const likeNewTweet = async (userId: number, tweetId: number) => {
-  const isTweetLiked = await LikedTweets.findOne({ where: { userId } });
+  const isTweetLiked = await LikedTweets.findOne({ where: { userId, tweetId } });
 
   if (isTweetLiked !== null) {
-    const unlikeTweet = await LikedTweets.destroy({ where: { userId } });
+    const unlikeTweet = await LikedTweets.destroy({ where: { userId, tweetId } });
     await subtractTweetLike(tweetId);
     if (unlikeTweet !== null) {
       return { status: 201, data: { action: 'Unliked' } };
