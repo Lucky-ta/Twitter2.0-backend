@@ -4,7 +4,7 @@ import signToken from './accountSecurity/token/JwtFunctions';
 import userErrors from './errorMessages/userMessages';
 import { UserBodyRequest } from './types/servicesTypes';
 
-const { User } = require('../../database/models');
+const { User, Tweet, LikedTweets } = require('../../database/models');
 
 export const validateResponse = (response: any, errorMessage: string, statusCode: number) => {
   if (response !== null) {
@@ -58,8 +58,10 @@ const loginUserAccount = async (userCredentials: UserBodyRequest) => {
 };
 
 const excludeAccount = async (accountId: number) => {
-  const deleteTweet = await User.destroy({ where: { id: accountId } });
+  await LikedTweets.destroy({ where: { userId: accountId } });
+  await Tweet.destroy({ where: { userId: accountId } });
 
+  const deleteTweet = await User.destroy({ where: { id: accountId } });
   return validateResponse(deleteTweet, userErrors.userError, 200);
 };
 
