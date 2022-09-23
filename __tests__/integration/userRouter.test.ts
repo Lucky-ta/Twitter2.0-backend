@@ -6,6 +6,7 @@ import {
   createUser,
   deleteUser,
   editUserName,
+  getUserById,
   signInUser,
 } from '../utils/supertestsFunctions';
 import userCredentials from '../mock/userCredentials';
@@ -13,7 +14,7 @@ import userCredentials from '../mock/userCredentials';
 const truncate = require('../utils/truncateDb');
 
 let userToken: string;
-let registeredUserId: number;
+let registeredUserId: string;
 
 describe('Test user router', () => {
   beforeAll(async () => {
@@ -185,6 +186,19 @@ describe('Test user router', () => {
 
       const result = await deleteUser(userId, userToken);
       expect(result.statusCode).toBe(404);
+    });
+  });
+
+  describe('GET: /user/:userId', () => {
+    beforeEach(async () => {
+      await truncate();
+      const createResponse = await createUser(userCredentials.validCredentials);
+
+      registeredUserId = createResponse.body.id;
+    });
+    it('should return status code 200 with valid userId', async () => {
+      const result = await getUserById(registeredUserId);
+      expect(result.statusCode).toBe(200);
     });
   });
 });

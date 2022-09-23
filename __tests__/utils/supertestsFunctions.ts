@@ -88,3 +88,10 @@ export const getLikedTweets = async (userId: string, accessToken: string) => {
     .set('Authorization', accessToken);
   return result;
 };
+
+export const getUserById = async (userId: string) => {
+  const result = await request(app)
+    .get(`/user/${userId}`)
+    .set('Accept', 'application/json');
+  return result;
+};
