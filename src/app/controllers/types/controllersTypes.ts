@@ -9,6 +9,7 @@ export interface serviceUserShape {
     excludeAccount: (accountId: number) => Promise<serviceFunctionsResponseShape>;
     loginUserAccount: (body: any) => Promise<serviceFunctionsResponseShape>;
     postUser: (body: any) => Promise<serviceFunctionsResponseShape>;
+    userById: (userId: number) => Promise<serviceFunctionsResponseShape>
 }
 
 export type UserDataShape = {

@@ -31,6 +31,12 @@ userRouter.put(
   UserController.editUserName,
 );
 
+userRouter.get(
+  '/:userId',
+
+  UserController.getUserById,
+);
+
 userRouter.delete(
   '/exclude/:id',
   tokenValidation,

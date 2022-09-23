@@ -196,9 +196,25 @@ describe('Test user router', () => {
 
       registeredUserId = createResponse.body.id;
     });
-    it('should return status code 200 with valid userId', async () => {
+    it('should return status code 200 with valid user ID', async () => {
       const result = await getUserById(registeredUserId);
       expect(result.statusCode).toBe(200);
+    });
+    it('should return user data with valid user ID', async () => {
+      const result = await getUserById(registeredUserId);
+      const expectResponse = {
+        id: registeredUserId,
+        name: userCredentials.validCredentials.name,
+        email: userCredentials.validCredentials.email,
+      };
+
+      expect(result.body).toStrictEqual(expectResponse);
+    });
+    it('should return status code 404 with a invalid user ID', async () => {
+      const invalidUserId = '1000';
+      const result = await getUserById(invalidUserId);
+
+      expect(result.statusCode).toStrictEqual(404);
     });
   });
 });

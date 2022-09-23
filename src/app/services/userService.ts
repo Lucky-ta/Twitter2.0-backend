@@ -74,9 +74,15 @@ const editName = async (userId: number, newName: string) => {
   return validateResponse(updateUserName, userErrors.userError, 200);
 };
 
+const userById = async (userId: number) => {
+  const user = await User.findOne({ where: { id: userId }, attributes: ['id', 'name', 'email'] });
+  return validateResponse(user, userErrors.userError, 200);
+};
+
 export {
   postUser,
   loginUserAccount,
   excludeAccount,
   editName,
+  userById,
 };

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import {
-  editName, excludeAccount, loginUserAccount, postUser,
+  editName, excludeAccount, loginUserAccount, postUser, userById,
 } from '../services/userService';
 import { serviceUserShape } from './types/controllersTypes';
 
@@ -12,6 +12,7 @@ class UserController {
     this.loginUser = this.loginUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
     this.editUserName = this.editUserName.bind(this);
+    this.getUserById = this.getUserById.bind(this);
     this.service = service;
   }
 
@@ -58,10 +59,21 @@ class UserController {
       return res.status(500).json(e.message);
     }
   }
+
+  async getUserById(req: Request, res: Response) {
+    try {
+      const { userId } = req.params;
+      const parsedId = Number(userId);
+      const result = await this.service.userById(parsedId);
+      return res.status(result.status).json(result.data);
+    } catch (e: any) {
+      return res.status(500).json(e.message);
+    }
+  }
 }
 
 const services = {
-  editName, excludeAccount, loginUserAccount, postUser,
+  editName, excludeAccount, loginUserAccount, postUser, userById,
 };
 
 export default new UserController(services);
