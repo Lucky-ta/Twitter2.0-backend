@@ -101,6 +101,7 @@ Certifique-se de que não há nenhuma mais nenhuma aplicação rodando na porta 
 - http://localhost:3000/user/login (POST METHOD) - Parâmetros [email, password] - (LOGIN DE USUÁRIO);
 - http://localhost:3000/user/edit/:id (PUT METHOD) - Parâmetros [name] - (EDITAR NOME DO USUÁRIO);
 - http://localhost:3000/user/exclude/:id (DELETE METHOD) - Parâmetros [] - (EXCLUIR USUÁRIO);
+- http://localhost:3000/user/:userId (GET METHOD) - Parâmetros [] - (RETORNA O USUÁRIO PELO SEU ID);
 ---
 
 --Rotas de tweet--
