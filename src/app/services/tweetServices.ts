@@ -29,6 +29,7 @@ const getAllTweets = async () => {
 };
 
 const destroyTweet = async (tweetId: number) => {
+  await LikedTweets.destroy({ where: { tweetId } });
   const deleteTweet = await Tweet.destroy({ where: { id: tweetId } });
 
   return validateResponse(deleteTweet, tweetErrors.tweetError, 200);
