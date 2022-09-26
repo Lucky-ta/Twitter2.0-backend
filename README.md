@@ -113,4 +113,25 @@ Certifique-se de que não há nenhuma mais nenhuma aplicação rodando na porta 
 - http://localhost:3000/tweet/:tweetId/:userId (DELETE METHOD) - Parâmetros [] - (EXCLUI O TWEET DE UM USUÁRIO ESPECÍFICO);
 
 ---
+## 🛠️ Construído com
 
+O projeto foi desenvolvido com as seguintes ferramentas:
+
+* [TypeScript](https://www.typescriptlang.org/)
+* [JavaScript](https://www.javascript.com/)
+* [Jest](https://jestjs.io/)
+* [ESlint](https://eslint.org/)
+* [JsonWebToken](https://www.npmjs.com/package/jsonwebtoken)
+* [NodeJS](https://nodejs.org/en/)
+* [Express](https://expressjs.com/)
+* [Docker](https://www.docker.com/)
+* [Heroku](https://heroku.com/)
+* [Sqlite](https://www.sqlite.org/index.html)
+
+## 📌 Versão e API
+
+[Git](https://git-scm.com/) - para controle de versão.
+
+## 🚀 Deploy
+O deploy do projeto foi realizado utililizando:
+* [Heroku](https://heroku.com/)
