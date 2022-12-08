@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable no-undef */
-const bycryptFunctions_1 = require("../../src/app/services/accountSecurity/bycrypt/bycryptFunctions");
+const bycryptFunctions_1 = require("../../api/app/services/accountSecurity/bycrypt/bycryptFunctions");
 const passwordTest = '123456';
 let passwordInDatabase;
 describe('Test crypt password functions', () => {

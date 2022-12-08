@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertestsFunctions_1 = require("../utils/supertestsFunctions");
 const userCredentials_1 = __importDefault(require("../mock/userCredentials"));
 const tweetMock_1 = __importDefault(require("../mock/tweetMock"));
-const validateError_1 = __importDefault(require("../../src/app/middlewares/errorMessages/validateError"));
+const validateError_1 = __importDefault(require("../../api/app/middlewares/errorMessages/validateError"));
 /* eslint-disable no-undef */
 const truncate = require('../utils/truncateDb');
 let userToken;

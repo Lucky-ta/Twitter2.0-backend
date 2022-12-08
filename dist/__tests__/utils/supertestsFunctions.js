@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUserById = exports.getLikedTweets = exports.likeTweet = exports.deleteTweetById = exports.getTweetsByUserId = exports.getAllTweets = exports.createTweet = exports.deleteUser = exports.editUserName = exports.signInUser = exports.createUser = void 0;
 const supertest_1 = __importDefault(require("supertest"));
-const app_1 = __importDefault(require("../../src/app"));
+const app_1 = __importDefault(require("../../api/app"));
 const createUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield (0, supertest_1.default)(app_1.default)
         .post('/user/create')

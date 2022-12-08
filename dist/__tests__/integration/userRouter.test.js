@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable no-undef */
-const userErrorMessages_1 = __importDefault(require("../../src/app/middlewares/errorMessages/userErrorMessages"));
-const validateError_1 = __importDefault(require("../../src/app/middlewares/errorMessages/validateError"));
-const userMessages_1 = __importDefault(require("../../src/app/services/errorMessages/userMessages"));
+const userErrorMessages_1 = __importDefault(require("../../api/app/middlewares/errorMessages/userErrorMessages"));
+const validateError_1 = __importDefault(require("../../api/app/middlewares/errorMessages/validateError"));
+const userMessages_1 = __importDefault(require("../../api/app/services/errorMessages/userMessages"));
 const supertestsFunctions_1 = require("../utils/supertestsFunctions");
 const userCredentials_1 = __importDefault(require("../mock/userCredentials"));
 const truncate = require('../utils/truncateDb');

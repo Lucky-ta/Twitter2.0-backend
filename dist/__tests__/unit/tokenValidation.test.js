@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable no-undef */
-const JwtFunctions_1 = __importDefault(require("../../src/app/services/accountSecurity/token/JwtFunctions"));
+const JwtFunctions_1 = __importDefault(require("../../api/app/services/accountSecurity/token/JwtFunctions"));
 const userCredentials_1 = __importDefault(require("../mock/userCredentials"));
 const validateMocks_1 = __importDefault(require("../mock/validateMocks"));
 const invalidSecret = 'invalidSecret';
