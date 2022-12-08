@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "pretest": "NODE_ENV=test sequelize db:migrate",
     "test": "NODE_ENV=test jest -i --forceExit --verbose",
