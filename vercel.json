@@ -2,7 +2,7 @@
   "name": "twitter2.0-backend",
   "version": 2,
   "public": true,
-  "build": {
+  "builds": {
     "src": "./dist/src/server.js",
     "use": "@vercel/node"
   },
