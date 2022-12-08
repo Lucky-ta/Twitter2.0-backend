@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../../api/app';
+import app from '../../src/app';
 
 type TestUserCredentialsShape = {
     name?: string;

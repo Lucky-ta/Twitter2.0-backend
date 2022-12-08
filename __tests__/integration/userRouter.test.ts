@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
-import userErrorsMiddlweares from '../../api/app/middlewares/errorMessages/userErrorMessages';
-import validateErrors from '../../api/app/middlewares/errorMessages/validateError';
-import userErrors from '../../api/app/services/errorMessages/userMessages';
+import userErrorsMiddlweares from '../../src/app/middlewares/errorMessages/userErrorMessages';
+import validateErrors from '../../src/app/middlewares/errorMessages/validateError';
+import userErrors from '../../src/app/services/errorMessages/userMessages';
 import {
   createUser,
   deleteUser,

@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { hashPassword, passwordValidation } from '../../api/app/services/accountSecurity/bycrypt/bycryptFunctions';
+import { hashPassword, passwordValidation } from '../../src/app/services/accountSecurity/bycrypt/bycryptFunctions';
 
 const passwordTest = '123456';
 let passwordInDatabase: string;

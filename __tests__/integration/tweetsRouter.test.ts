@@ -10,7 +10,7 @@ import {
 } from '../utils/supertestsFunctions';
 import userCredentials from '../mock/userCredentials';
 import tweetMock from '../mock/tweetMock';
-import validateErrors from '../../api/app/middlewares/errorMessages/validateError';
+import validateErrors from '../../src/app/middlewares/errorMessages/validateError';
 
 /* eslint-disable no-undef */
 const truncate = require('../utils/truncateDb');

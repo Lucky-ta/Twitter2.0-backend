@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import signToken from '../../api/app/services/accountSecurity/token/JwtFunctions';
+import signToken from '../../src/app/services/accountSecurity/token/JwtFunctions';
 import userCredentials from '../mock/userCredentials';
 import tokenValidationMiddleware from '../mock/validateMocks';
 
