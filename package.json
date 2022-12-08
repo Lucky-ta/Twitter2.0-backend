@@ -2,7 +2,7 @@
   "name": "twitter2.0-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/api/server.js",
+  "main": "./api/server.js",
   "scripts": {
     "pretest": "NODE_ENV=test sequelize db:migrate",
     "test": "NODE_ENV=test jest -i --forceExit --verbose",
