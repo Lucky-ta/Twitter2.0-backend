@@ -10,9 +10,13 @@ const userRouter_1 = __importDefault(require("./app/routes/userRouter"));
 require('dotenv').config({
     path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
 });
+const corsOptions = {
+    origin: 'https://twitter-clone-bac-kend.herokuapp.com/',
+    optionsSuccessStatus: 200,
+};
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)(corsOptions));
 app.use('/user', userRouter_1.default);
 app.use('/tweet', tweetRouter_1.default);
 exports.default = app;
